@@ -11,22 +11,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/login"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="253dp"
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="199dp"
-                android:layout_marginTop="66dp"
-                android:layout_marginEnd="182dp"
-                android:layout_marginBottom="47dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:background="@drawable/leaf_background"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -42,32 +30,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.738" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -75,13 +37,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-                android:text="Let's Find a Dog"
-                android:textColor="@color/white"
+                android:text="Reivew Friends"
+                android:textColor="@color/main_color"
                 android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.135"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.577" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -89,12 +53,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:text="Together!"
-                android:textColor="@color/white"
+                android:text="리프"
+                android:textColor="@color/black"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="231dp"
+                android:layout_height="113dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.885"
+                app:srcCompat="@drawable/leaf_icon"
+                tools:layout_editor_absoluteX="65dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,6 +78,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
+            android:background="@drawable/leaf_bottom"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
 
@@ -110,6 +86,7 @@
                 android:id="@+id/emailArea"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/background_login"
                 android:hint="email"
                 android:lines="1"
@@ -125,6 +102,7 @@
                 android:id="@+id/passwordArea"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/background_login"
                 android:hint="password"
                 android:inputType="textPassword"
@@ -133,6 +111,7 @@
                 android:singleLine="true"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailArea" />
 
@@ -141,11 +120,11 @@
                 android:layout_width="230dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="52dp"
-                android:background="@drawable/background_radius"
+                android:background="@drawable/background_login"
                 android:gravity="center"
-                android:text="makeid"
+                android:text="joinid"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/main_color"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -157,6 +136,7 @@
                 android:id="@+id/loginBtn"
                 android:layout_width="230dp"
                 android:layout_height="45dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/background_radius"
                 android:gravity="center"
                 android:text="login"
