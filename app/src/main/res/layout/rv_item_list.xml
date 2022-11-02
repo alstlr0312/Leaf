@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_login"
+    android:layout_margin="3dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="360dp"
+            android:layout_height="160dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/rv_dogProfile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_dogProfile">
+
+
+                <TextView
+                    android:id="@+id/rv_writer"
+                    android:layout_width="51dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="홍길동"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/rv_date"
+                    android:layout_width="77dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="5dp"
+                    android:text="9999/99/99"
+                    android:textColor="#ABABAF"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_writer" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="59dp"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/re_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/user" />
+
+                <TextView
+                    android:id="@+id/re_title"
+                    android:layout_width="339dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="5dp"
+                    android:text="제목입니당"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+                <ImageView
+                    android:id="@+id/rv_photo"
+                    android:layout_width="63dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="276dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/re_title"
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                <TextView
+                    android:id="@+id/rv_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="5dp"
+                    android:text="TextView"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/rv_photo"
+                    app:layout_constraintTop_toTopOf="@+id/rv_photo" />
+
+                <ImageView
+                    android:id="@+id/rv_star1"
+                    android:layout_width="25dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="128dp"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rv_photo"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
+                <ImageView
+                    android:id="@+id/rv_star2"
+                    android:layout_width="25dp"
+                    android:layout_height="23dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_star1"
+                    app:layout_constraintStart_toEndOf="@+id/rv_star1"
+                    app:layout_constraintTop_toTopOf="@+id/rv_star1"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
+                <ImageView
+                    android:id="@+id/rv_star3"
+                    android:layout_width="25dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_star2"
+                    app:layout_constraintStart_toEndOf="@+id/rv_star2"
+                    app:layout_constraintTop_toTopOf="@+id/rv_star2"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
+                <ImageView
+                    android:id="@+id/rv_star4"
+                    android:layout_width="25dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_star3"
+                    app:layout_constraintStart_toEndOf="@+id/rv_star3"
+                    app:layout_constraintTop_toTopOf="@+id/rv_star3"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
+                <ImageView
+                    android:id="@+id/rv_star5"
+                    android:layout_width="25dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_star4"
+                    app:layout_constraintStart_toEndOf="@+id/rv_star4"
+                    app:layout_constraintTop_toTopOf="@+id/rv_star4"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="29dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="1dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_star5"
+                    app:layout_constraintStart_toEndOf="@+id/rv_star5"
+                    app:layout_constraintTop_toTopOf="@+id/rv_star5"
+                    app:layout_constraintVertical_bias="0.4"
+                    app:srcCompat="@drawable/heart" />
+
+                <Button
+                    android:id="@+id/rv_follow"
+                    android:layout_width="78dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="123dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Follow"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/re_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rv_date"
+                    app:layout_constraintTop_toTopOf="@+id/rv_writer" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
