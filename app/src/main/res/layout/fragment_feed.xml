@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".feed.FeedFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="리프"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="108dp"
+            android:layout_height="67dp"
+            android:src="@drawable/leaf_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.633"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FF000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="67dp"></LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="46dp"
+            android:layout_height="43dp"
+            android:src="@android:drawable/ic_menu_search"
+            android:value="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/editBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:background="@drawable/background_btn"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.578" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="126dp"
+            android:layout_height="121dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.109" />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="126dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="32dp"
+            android:text="홍길동"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+        <TextView
+            android:id="@+id/introduce"
+            android:layout_width="124dp"
+            android:layout_height="39dp"
+            android:text="하이용"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/nameText"
+            app:layout_constraintStart_toStartOf="@+id/nameText"
+            app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+        <EditText
+            android:id="@+id/movie"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="영화"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+        <EditText
+            android:id="@+id/food"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:textSize="23sp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="맛집"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/beauty"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/beauty"
+            app:layout_constraintTop_toBottomOf="@+id/beauty" />
+
+        <EditText
+            android:id="@+id/house"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="숙소"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/movie"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/movie"
+            app:layout_constraintTop_toBottomOf="@+id/movie" />
+
+        <EditText
+            android:id="@+id/beauty"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:textSize="23sp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="미용"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/house"
+            app:layout_constraintStart_toStartOf="@+id/house"
+            app:layout_constraintTop_toBottomOf="@+id/house" />
+
+        <ImageView
+            android:id="@+id/movieBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:tint="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="@+id/movie"
+            app:layout_constraintEnd_toEndOf="@+id/movie"
+            app:layout_constraintHorizontal_bias="0.973"
+            app:layout_constraintStart_toStartOf="@+id/movie"
+            app:layout_constraintTop_toTopOf="@+id/movie" />
+
+        <ImageView
+            android:id="@+id/foodBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:tint="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="@+id/food"
+            app:layout_constraintEnd_toEndOf="@+id/beautyBtn"
+            app:layout_constraintStart_toStartOf="@+id/beautyBtn"
+            app:layout_constraintTop_toTopOf="@+id/food" />
+
+        <ImageView
+            android:id="@+id/beautyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:tint="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="@+id/beauty"
+            app:layout_constraintStart_toStartOf="@+id/houseBtn"
+            app:layout_constraintTop_toTopOf="@+id/beauty" />
+
+        <ImageView
+            android:id="@+id/houseBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:tint="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="@+id/house"
+            app:layout_constraintEnd_toEndOf="@+id/movie"
+            app:layout_constraintStart_toStartOf="@+id/movieBtn"
+            app:layout_constraintTop_toTopOf="@+id/house"
+            app:layout_constraintVertical_bias="0.388" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
