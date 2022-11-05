@@ -41,7 +41,7 @@
 
                 <Button
                     android:id="@+id/button4"
-                    android:layout_width="403dp"
+                    android:layout_width="420dp"
                     android:layout_height="25dp"
                     android:background="@drawable/background_post1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
 
                 <Button
                     android:id="@+id/button"
-                    android:layout_width="400dp"
+                    android:layout_width="410dp"
                     android:layout_height="15dp"
                     android:background="@drawable/background_post2"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView7"

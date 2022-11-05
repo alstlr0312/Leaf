@@ -12,11 +12,13 @@ object FBRef {
 
     private val database = Firebase.database
 
-    val boardRef = database.getReference("board")
+    val movieRef = database.getReference("movie")
 
-    val commentRef = database.getReference("comment")
+    val houseRef = database.getReference("house")
 
-    val mapRef = database.getReference("Marker")
+    val foodRef = database.getReference("food")
+
+    val beautyRef = database.getReference("beauty")
 
     val userRef = database.getReference("User")
 
