@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/main_user"
+            android:id="@+id/profile_imageview"
             android:layout_width="80dp"
             android:layout_height="65dp"
             android:layout_marginTop="75dp"
@@ -30,7 +30,7 @@
             android:text="김민솔"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/main_user"
+            app:layout_constraintStart_toEndOf="@+id/profile_imageview"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="7dp"
             android:text="내 리뷰 보러왕"
-            app:layout_constraintStart_toEndOf="@+id/main_user"
+            app:layout_constraintStart_toEndOf="@+id/profile_imageview"
             app:layout_constraintTop_toBottomOf="@+id/main_name" />
         <TextView
             android:id="@+id/main_movie"
