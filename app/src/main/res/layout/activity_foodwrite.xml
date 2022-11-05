@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.WriteActivity">
+
+    <ImageView
+        android:id="@+id/write_camera"
+        android:layout_width="150dp"
+        android:layout_height="138dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/main_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/write_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="55dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="title"
+        android:layout_gravity="center"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:scrollHorizontally="false"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@+id/write_camera"
+        app:layout_constraintTop_toTopOf="parent"  />
+    <EditText
+        android:id="@+id/write_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="contents"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        android:scrollHorizontally="false"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@+id/write_camera"
+        app:layout_constraintTop_toBottomOf="@+id/write_title" />
+
+
+
+    <TextView
+        android:id="@+id/write_why"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="57dp"
+        android:text="이 가게에 대해 얼마나 만족하나요?"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/write_contents" />
+    <ImageView
+        android:src="@drawable/star"
+        android:id="@+id/write_star"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/write_why" />
+    <ImageView
+        android:src="@drawable/star"
+        android:id="@+id/write_star2"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintStart_toEndOf="@id/write_star"
+        app:layout_constraintTop_toBottomOf="@id/write_why" />
+    <ImageView
+        android:src="@drawable/star"
+        android:id="@+id/write_star3"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintStart_toEndOf="@id/write_star2"
+        app:layout_constraintTop_toBottomOf="@id/write_why" />
+    <ImageView
+        android:src="@drawable/star"
+        android:id="@+id/write_star4"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintStart_toEndOf="@id/write_star3"
+        app:layout_constraintTop_toBottomOf="@id/write_why" />
+    <ImageView
+        android:src="@drawable/star"
+        android:id="@+id/write_star5"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintStart_toEndOf="@id/write_star4"
+        app:layout_constraintTop_toBottomOf="@id/write_why" />
+
+    <TextView
+        android:id="@+id/write_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="리뷰 작성"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/write_why"
+        app:layout_constraintTop_toBottomOf="@id/write_star" />
+
+    <EditText
+        android:id="@+id/write_edit"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/radious"
+        android:ems="10"
+        android:hint="다른 팔로워들에게 도움이 되도록 솔직한 평가 부탁드려요"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="@+id/write_review"
+        app:layout_constraintTop_toBottomOf="@id/write_review" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="60dp">
+        <Button
+            android:text="리뷰 작성 완료"
+            android:id="@+id/pingping"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bottom_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

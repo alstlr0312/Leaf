@@ -9,5 +9,17 @@
         android:id="@+id/homeFragment"
         android:name="com.example.leaf.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_feedFragment2"
+            app:destination="@id/feedFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedFragment2"
+        android:name="com.example.leaf.feed.FeedFragment"
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/action_feedFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

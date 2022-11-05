@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:title="홈"
+        android:icon="@drawable/bottom_user"/>
+
+    <item
+        android:id="@+id/feedFragment"
+        android:title="게시글"
+        android:icon="@drawable/menu"/>
+
+    <item
+        android:id="@+id/settingFragment"
+        android:title="설정"
+        android:icon="@drawable/btn_setting"/>
+</menu>

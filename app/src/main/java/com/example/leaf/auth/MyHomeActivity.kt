@@ -2,53 +2,80 @@ package com.example.leaf.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.leaf.HomeFragment
 import com.example.leaf.R
 import com.example.leaf.databinding.ActivityMyHomeBinding
-import com.google.android.material.navigation.NavigationBarView
+import com.example.leaf.feed.FeedFragment
+import com.example.leaf.setting.settingFragment
 
+private const val TAG_HOME = "home_fragment"
+private const val TAG_FEED = "feed_fragment"
+private const val TAG_SET = "setting_fragement"
 class MyHomeActivity : AppCompatActivity() {
-    private val homeFragment: HomeFragment by lazy { HomeFragment() }
-    private val binding by lazy { ActivityMyHomeBinding.inflate(layoutInflater) }
-
-    var backKeyPressedTime : Long = 0
+    private lateinit var binding :  ActivityMyHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMyHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().add(R.id.bottom_containers, mapFragment).commit()
-        val navigationBarView = binding.bottomNavigationview
-        navigationBarView.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.mainMapFragment -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.bottom_containers, mapFragment)
-                        .commit()
-                    return@OnItemSelectedListener true
-                }
-                R.id.postFragment -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.bottom_containers, homeFragment)
-                        .commit()
-                    return@OnItemSelectedListener true
-                }
-                R.id.profileFragment -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.bottom_containers, profileFragment)
-                        .commit()
-                    return@OnItemSelectedListener true
-                }
+        setFragment(TAG_HOME, HomeFragment())
+
+        binding.navigationView.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
+                R.id.feedFragment -> setFragment(TAG_FEED, FeedFragment())
+                R.id.settingFragment->setFragment(TAG_SET,settingFragment())
             }
-            false
-        })
+            true
+        }
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
+    private fun setFragment(tag: String, fragment: Fragment) {
+        val manager: FragmentManager = supportFragmentManager
+        val fragTransaction = manager.beginTransaction()
 
-        if(System.currentTimeMillis() > backKeyPressedTime + 2500) {
-            backKeyPressedTime = System.currentTimeMillis();
-            return;
-        } else {
-            finishAffinity()
+        if (manager.findFragmentByTag(tag) == null){
+            fragTransaction.add(R.id.mainFrameLayout, fragment, tag)
         }
+
+        val home = manager.findFragmentByTag(TAG_HOME)
+        val feed = manager.findFragmentByTag(TAG_FEED)
+        val set = manager.findFragmentByTag(TAG_SET)
+
+
+        if (home != null){
+            fragTransaction.hide(home)
+        }
+
+
+        if (feed != null){
+            fragTransaction.hide(feed)
+        }
+
+        if (set != null){
+            fragTransaction.hide(set)
+        }
+
+        if (tag == TAG_HOME) {
+            if (home!=null){
+                fragTransaction.show(home)
+            }
+        }
+        else if (tag == TAG_FEED) {
+            if (feed != null) {
+                fragTransaction.show(feed)
+            }
+        }
+
+        else if (tag == TAG_SET){
+            if (set != null){
+                fragTransaction.show(set)
+            }
+        }
+
+        fragTransaction.commitAllowingStateLoss()
     }
 }
