@@ -12,7 +12,6 @@
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="229dp"
-            android:background="@drawable/leaf_background"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -21,26 +20,14 @@
                 android:layout_height="66dp"
                 android:layout_weight="1"
                 android:text="리프"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.314"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.773" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="157dp"
-                android:layout_height="149dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.366"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/leaf_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,7 +37,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:background="@drawable/leaf_bottom"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
             <EditText
