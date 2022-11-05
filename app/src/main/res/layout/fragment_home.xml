@@ -70,7 +70,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/main_plus"
+            android:id="@+id/movieplusBtn"
             android:layout_width="35dp"
             android:layout_height="39dp"
             android:layout_marginTop="206dp"
@@ -116,7 +116,7 @@
             app:layout_constraintTop_toBottomOf="@+id/main_arrow" />
 
         <ImageView
-            android:id="@+id/main_plus2"
+            android:id="@+id/houseplusBtn"
             android:layout_width="35dp"
             android:layout_height="39dp"
             android:layout_marginTop="28dp"
@@ -124,7 +124,7 @@
             android:src="@drawable/plus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_arrow2"
-            app:layout_constraintTop_toBottomOf="@+id/main_plus" />
+            app:layout_constraintTop_toBottomOf="@+id/movieplusBtn" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             app:layout_constraintStart_toEndOf="@+id/main_beauty"
             app:layout_constraintTop_toBottomOf="@+id/main_arrow2" />
         <ImageView
-            android:id="@+id/main_plus3"
+            android:id="@+id/beautyplusBtn"
             android:layout_width="35dp"
             android:layout_height="39dp"
             android:layout_marginTop="28dp"
@@ -169,7 +169,7 @@
             android:src="@drawable/plus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_arrow2"
-            app:layout_constraintTop_toBottomOf="@+id/main_plus2" />
+            app:layout_constraintTop_toBottomOf="@+id/houseplusBtn" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginLeft="18dp"
@@ -205,7 +205,7 @@
             app:layout_constraintStart_toEndOf="@+id/main_delicious"
             app:layout_constraintTop_toBottomOf="@+id/main_arrow3" />
         <ImageView
-            android:id="@+id/main_plus4"
+            android:id="@+id/foodplusBtn"
             android:layout_width="35dp"
             android:layout_height="39dp"
             android:layout_marginTop="28dp"
@@ -213,7 +213,7 @@
             android:src="@drawable/plus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_arrow3"
-            app:layout_constraintTop_toBottomOf="@+id/main_plus3" />
+            app:layout_constraintTop_toBottomOf="@+id/beautyplusBtn" />
 
         <LinearLayout
             android:layout_width="match_parent"

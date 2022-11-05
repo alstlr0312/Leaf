@@ -10,19 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:id="@+id/main_editbtn"
-            android:text="편집"
-            android:textSize="15sp"
-            android:background="@drawable/radious"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="9dp"
-            android:textColor="@color/black"
             android:layout_width="50dp"
             android:layout_height="35dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/radious"
+            android:text="편집"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/main_logo"
@@ -65,7 +66,7 @@
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView3"
+        android:id="@+id/bottom_containers"
         android:name="androidx.navigation.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
