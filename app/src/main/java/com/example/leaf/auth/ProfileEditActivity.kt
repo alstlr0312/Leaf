@@ -3,9 +3,12 @@ package com.example.leaf.auth
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -13,17 +16,33 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.leaf.R
+import com.example.leaf.Utils.FBAuth
+import com.example.leaf.Utils.FBRef
 import com.example.leaf.databinding.ActivityProfileEditBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 
 class ProfileEditActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
    private lateinit var binding: ActivityProfileEditBinding
     lateinit var profileview: ImageView
+    private var imageUri : Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initImageViewProfile()
-        binding.profileBtn.setOnClickListener {
+        auth = Firebase.auth
+
+        val profileName = binding.editName
+        profileName.setText(FBAuth.getDisplayName())
+        val profileBtn = binding.profileBtn
+        profileBtn.setOnClickListener {
+            FBAuth.setDisplayName(profileName.text.toString())
+            Toast.makeText(this,profileName.text.toString(),Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
         }
@@ -75,9 +94,24 @@ class ProfileEditActivity : AppCompatActivity() {
             }
         }
         private fun navigateGallery() {
-            val intent = Intent(Intent.ACTION_PICK)
+            //이미지 이름을 key값으로 저장
+            val key = FBRef.profileRef.push().key.toString()
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+            val mountainsRef = storageRef.child(key+".png")
+
+            val imageView = binding.profileImageview
+            imageView.isDrawingCacheEnabled = true
+            imageView.buildDrawingCache()
+            val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            val uploadTask = mountainsRef.putBytes(data)
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             intent.type = "image/*"
             startActivityForResult(intent, 2000)
+
         }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -88,9 +122,11 @@ class ProfileEditActivity : AppCompatActivity() {
         when (requestCode) {
             // 2000: 이미지 컨텐츠를 가져오는 액티비티를 수행한 후 실행되는 Activity 일 때만 수행하기 위해서
             2000 -> {
+                imageUri = data?.data
+                binding.profileImageview.setImageURI(imageUri)
                 val selectedImageUri: Uri? = data?.data
                 if (selectedImageUri != null) {
-                    profileview.setImageURI(selectedImageUri)
+                    binding.profileImageview.setImageURI(data?.data)
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -111,6 +147,7 @@ class ProfileEditActivity : AppCompatActivity() {
             .create()
             .show()
     }
+
 
 
 }
