@@ -19,6 +19,8 @@ import com.example.leaf.databinding.ActivityProfileEditBinding
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -39,17 +41,27 @@ class ProfileEditActivity : AppCompatActivity() {
 
         imageUpload(key)
             binding.profileBtn.setOnClickListener {
-                val introduce = binding.editIntroduce.text.toString()
-                Log.d(TAG, introduce)
+                val introduce = binding.editIntroduce.text.toString() //자기소개
+                //데이터 1개가 계속 수정되는 방식
                 FBRef.profileRef
-                    .push()
                     .setValue(ProfileModel(introduce))
-            FBAuth.setDisplayName(profileName.text.toString())
+              //  binding.editIntroduce.text.clear()
+                FBAuth.setDisplayName(profileName.text.toString())
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
         }
     }
+    private fun initView() {
 
+        FBRef.profileRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot){
+                val value = dataSnapshot.getValue<String>()
+            }
+            override fun onCancelled(error: DatabaseError){
+
+            }
+        })
+    }
     private fun initImageViewProfile() {
 
         binding.profileImageview.setOnClickListener {
@@ -59,7 +71,22 @@ class ProfileEditActivity : AppCompatActivity() {
          }
     }
 
+    private fun getData() {
+        val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val FBRef: DatabaseReference = database.getReference("introduce")
 
+        FBRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val value = snapshot?.value
+                binding.editIntroduce.text.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("Failed to read value.")
+
+            }
+        })
+    }
 
         private fun imageUpload(key : String) {
             //이미지 이름을 key값으로 저장
