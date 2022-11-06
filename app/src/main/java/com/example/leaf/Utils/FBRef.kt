@@ -20,7 +20,7 @@ object FBRef {
 
     val beautyRef = database.getReference("beauty")
 
-    val profileRef = database.getReference("profileimageview")
+    val profileRef = database.getReference("profile")
     val userRef = database.getReference("User")
 
 
