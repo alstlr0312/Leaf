@@ -38,14 +38,12 @@ class ProfileEditActivity : AppCompatActivity() {
         val key = FBRef.profileRef.push().key.toString()
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
-
         imageUpload(key)
             binding.profileBtn.setOnClickListener {
                 val introduce = binding.editIntroduce.text.toString() //자기소개
                 //데이터 1개가 계속 수정되는 방식
                 FBRef.profileRef
-                    .setValue(ProfileModel(introduce))
-              //  binding.editIntroduce.text.clear()
+                    .setValue(ProfileModel(introduce)) //파이어베이스에 저장
                 FBAuth.setDisplayName(profileName.text.toString())
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
@@ -54,13 +52,17 @@ class ProfileEditActivity : AppCompatActivity() {
     private fun initView() {
 
         FBRef.profileRef.addValueEventListener(object : ValueEventListener {
+            //onDataChange는 데이터가 변경될때마다 호출된다.
             override fun onDataChange(dataSnapshot: DataSnapshot){
                 val value = dataSnapshot.getValue<String>()
+                Log.d(TAG, "Value is: $value")
+                binding.editIntroduce.setText(value)
             }
             override fun onCancelled(error: DatabaseError){
 
             }
         })
+
     }
     private fun initImageViewProfile() {
 

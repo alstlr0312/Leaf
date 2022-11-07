@@ -1,6 +1,8 @@
 package com.example.leaf
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,45 +26,35 @@ import com.google.firebase.ktx.Firebase
 
 
 class HomeFragment : Fragment() {
-    companion object {
-        //경로
-        private val fireDatabase = FirebaseDatabase.getInstance().getReference("profile")
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
-    }
-
 
     private lateinit var auth: FirebaseAuth
-
     //프래그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): FrameLayout {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         val profileName = binding.mainProfile
-        val profileintroduce = binding.mainIntroduce.text.toString()
-
+        val profileintroduce = binding.mainIntroduce
         auth = Firebase.auth
-        profileName.setText(FBAuth.getDisplayName())
-        initView()
+        profileName.setText(FBAuth.getDisplayName()) //프로필 이름
+        FBRef.profileRef.child("introduce").addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.getValue<String>()
+                Log.d(ContentValues.TAG, "Value is: $value")
+                binding.mainIntroduce.setText(value)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
 
         return binding.root
     }
-}
-    private fun initView() {
 
-    FBRef.profileRef.addValueEventListener(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot){
-            val value = dataSnapshot.getValue<String>()
-
-        }
-        override fun onCancelled(error: DatabaseError){
-
-        }
-    })
 }
 
 
