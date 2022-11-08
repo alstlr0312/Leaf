@@ -57,7 +57,7 @@ class FeedFragment : Fragment() {
         binding.foBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getfoodData()
-                layoutManager = GridLayoutManager(requireContext(),2)
+                layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
                 foodAdapter= foodAdapter(foodDataList)
                 binding.rvPostList.adapter = foodAdapter
@@ -68,7 +68,7 @@ class FeedFragment : Fragment() {
         binding.beBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getbeautyData()
-                layoutManager = GridLayoutManager(requireContext(),2)
+                layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
                 beautyAdapter = beautyAdapter(beautyDataList)
                 binding.rvPostList.adapter = beautyAdapter
@@ -79,7 +79,7 @@ class FeedFragment : Fragment() {
         binding.hoBtn.setOnClickListener {
             binding.rvPostList.apply {
                 gethouseData()
-                layoutManager = GridLayoutManager(requireContext(),2)
+                layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
                 houseAdapter = houseAdapter(houseDataList)
                 binding.rvPostList.adapter = houseAdapter

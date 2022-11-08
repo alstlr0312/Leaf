@@ -55,7 +55,7 @@ class movieAdapter(val item : ArrayList<movieModel>) : RecyclerView.Adapter<movi
         holder.writer.text=item.get(position).uid
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
-
+        holder.star.text=item.get(position).star
 
         holder.itemView.setOnClickListener{
             onClick(context,position)
@@ -70,6 +70,7 @@ class movieAdapter(val item : ArrayList<movieModel>) : RecyclerView.Adapter<movi
         val writer = itemView.findViewById<TextView>(R.id.rv_writer)
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
+        val star = itemView.findViewById<TextView>(R.id.star)
     }
 
 

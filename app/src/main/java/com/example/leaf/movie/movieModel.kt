@@ -6,5 +6,6 @@ class movieModel  (
     val oneline : String = "",
     val board : String = "",
     val date : String = "",
-    val imUrl : String = ""
+    val imUrl : String = "",
+    val star : String = ""
 )

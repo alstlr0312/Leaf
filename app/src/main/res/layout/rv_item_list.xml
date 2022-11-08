@@ -106,60 +106,12 @@
                     app:layout_constraintTop_toTopOf="@+id/rv_photo" />
 
                 <ImageView
-                    android:id="@+id/rv_star1"
-                    android:layout_width="25dp"
-                    android:layout_height="23dp"
-                    android:layout_marginStart="128dp"
-                    android:layout_marginBottom="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/rv_photo"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageView
-                    android:id="@+id/rv_star2"
-                    android:layout_width="25dp"
-                    android:layout_height="23dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_star1"
-                    app:layout_constraintStart_toEndOf="@+id/rv_star1"
-                    app:layout_constraintTop_toTopOf="@+id/rv_star1"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageView
-                    android:id="@+id/rv_star3"
-                    android:layout_width="25dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_star2"
-                    app:layout_constraintStart_toEndOf="@+id/rv_star2"
-                    app:layout_constraintTop_toTopOf="@+id/rv_star2"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageView
-                    android:id="@+id/rv_star4"
-                    android:layout_width="25dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_star3"
-                    app:layout_constraintStart_toEndOf="@+id/rv_star3"
-                    app:layout_constraintTop_toTopOf="@+id/rv_star3"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageView
-                    android:id="@+id/rv_star5"
-                    android:layout_width="25dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_star4"
-                    app:layout_constraintStart_toEndOf="@+id/rv_star4"
-                    app:layout_constraintTop_toTopOf="@+id/rv_star4"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="29dp"
                     android:layout_height="33dp"
-                    android:layout_marginTop="1dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_star5"
-                    app:layout_constraintStart_toEndOf="@+id/rv_star5"
-                    app:layout_constraintTop_toTopOf="@+id/rv_star5"
-                    app:layout_constraintVertical_bias="0.4"
+                    android:layout_marginTop="28dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/re_title"
                     app:srcCompat="@drawable/heart" />
 
                 <Button
@@ -174,7 +126,27 @@
                     app:layout_constraintBottom_toTopOf="@+id/re_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/rv_date"
-                    app:layout_constraintTop_toTopOf="@+id/rv_writer" />
+                    app:layout_constraintTop_toTopOf="@+id/rv_writer"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView12"
+                    app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/star"
+                    app:layout_constraintEnd_toStartOf="@+id/star"
+                    app:layout_constraintTop_toTopOf="@+id/star"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

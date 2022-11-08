@@ -37,7 +37,7 @@ class BeautywriteActivity : AppCompatActivity() {
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
-
+            val star = binding.beautyratingBar.rating.toString()
             Log.d(TAG,title)
 
             //파이어 베이스 storge에 이미지를 저장
@@ -84,7 +84,7 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star))
                         Log.d("check", downloadUri.toString())
                     }
                 }

@@ -38,7 +38,7 @@ class FoodwriteActivity : AppCompatActivity() {
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
-
+            val star = binding.foodratingBar.rating.toString()
             Log.d(TAG,title)
 
             //파이어 베이스 storge에 이미지를 저장
@@ -85,7 +85,7 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star))
                         Log.d("check", downloadUri.toString())
                         Log.w(ContentValues.TAG, "등록완료")
                     }

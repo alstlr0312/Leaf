@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -55,6 +56,10 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
         holder.writer.text=item.get(position).uid
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
+        holder.star.text=item.get(position).star
+
+
+
 
 
         holder.itemView.setOnClickListener{
@@ -70,6 +75,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
         val writer = itemView.findViewById<TextView>(R.id.rv_writer)
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
+        val star = itemView.findViewById<TextView>(R.id.star)
     }
 
 

@@ -37,7 +37,7 @@ class MoviewriteActivity : AppCompatActivity() {
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
-
+            val star = binding.movieratingBar.rating.toString()
             Log.d(TAG,title)
 
             //파이어 베이스 storge에 이미지를 저장
@@ -84,7 +84,7 @@ class MoviewriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.movieRef
                             .child(key)
-                            .setValue(movieModel(title,ukey,oneline,board,time,imuri))
+                            .setValue(movieModel(title,ukey,oneline,board,time,imuri,star))
                         Log.d("check", downloadUri.toString())
                     }
                 }
