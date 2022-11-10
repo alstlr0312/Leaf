@@ -1,6 +1,7 @@
 package com.example.leaf.house
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -75,9 +76,9 @@ class houseAdapter(val item : ArrayList<houseModel>) : RecyclerView.Adapter<hous
 
 
     fun onClick(context: Context, position: Int) {
-        //val intent = Intent(context,PostActivity::class.java)
-      //  intent.putExtra("key",beuatyKeyList[position])
-      //  context.startActivity(intent)
+        val intent = Intent(context,housepostActivity::class.java)
+        intent.putExtra("key",houseKeyList[position])
+        context.startActivity(intent)
     }
 
 

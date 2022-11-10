@@ -1,6 +1,7 @@
 package com.example.leaf.food
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -75,9 +76,9 @@ class foodAdapter(val item : ArrayList<foodModel>) : RecyclerView.Adapter<foodAd
 
 
     fun onClick(context: Context, position: Int) {
-        //val intent = Intent(context,PostActivity::class.java)
-      //  intent.putExtra("key",beuatyKeyList[position])
-      //  context.startActivity(intent)
+        val intent = Intent(context, foodpostActivity::class.java)
+        intent.putExtra("key",foodKeyList[position])
+        context.startActivity(intent)
     }
 
 

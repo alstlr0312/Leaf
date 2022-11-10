@@ -1,6 +1,7 @@
 package com.example.leaf.beauty
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -80,9 +81,9 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
 
 
     fun onClick(context: Context, position: Int) {
-        //val intent = Intent(context,PostActivity::class.java)
-      //  intent.putExtra("key",beuatyKeyList[position])
-      //  context.startActivity(intent)
+        val intent = Intent(context,beautypostAtivity::class.java)
+        intent.putExtra("key",beautyKeyList[position])
+        context.startActivity(intent)
     }
 
 

@@ -75,7 +75,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/write_why"
-            app:layout_constraintTop_toBottomOf="@+id/beautyratingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/movieratingBar" />
 
         <EditText
             android:id="@+id/write_edit"

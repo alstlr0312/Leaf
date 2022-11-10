@@ -1,6 +1,7 @@
 package com.example.leaf.movie
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -75,9 +76,9 @@ class movieAdapter(val item : ArrayList<movieModel>) : RecyclerView.Adapter<movi
 
 
     fun onClick(context: Context, position: Int) {
-        //val intent = Intent(context,PostActivity::class.java)
-      //  intent.putExtra("key",beuatyKeyList[position])
-      //  context.startActivity(intent)
+        val intent = Intent(context,moviepostActivity::class.java)
+        intent.putExtra("key",movieKeyList[position])
+        context.startActivity(intent)
     }
 
 
