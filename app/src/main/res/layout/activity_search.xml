@@ -36,10 +36,12 @@
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/background_search"
                 app:iconifiedByDefault="false"
+                android:iconifiedByDefault="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:queryHint="검색어를 입력하시오" />
+                android:queryHint="ID를 검색하세요"
+                app:queryHint="ID를 검색하세요" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
