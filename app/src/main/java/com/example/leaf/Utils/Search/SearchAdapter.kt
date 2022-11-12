@@ -1,4 +1,4 @@
-package com.example.leaf.Search
+package com.example.leaf.Utils.Search
 
 import android.graphics.Color
 import android.util.Log
@@ -25,7 +25,7 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
     lateinit var mydata : UserModel
     private val TAG = SearchActivity::class.java.simpleName
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapter.Viewholder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_item_list,parent,false)
         return Viewholder(view)
     }
@@ -34,7 +34,7 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
         return item.size
     }
 
-    override fun onBindViewHolder(holder: SearchAdapter.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: Viewholder, position: Int) {
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
         var query = FBRef.userRef.child(uid)
