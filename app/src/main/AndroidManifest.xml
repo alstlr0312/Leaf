@@ -42,6 +42,14 @@
         </activity>
         <activity
             android:name=".house.housewriteActivity"
+            android:name=".Utils.Search.SearchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".auth.MyHomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

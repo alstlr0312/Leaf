@@ -29,13 +29,10 @@ class JoinActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val uid = task.result.user?.uid
-                            FBRef.userRef
-                                .child(uid!!).setValue(UserModel(uid,password,email,nickname))
-
+                            FBRef.userRef.child(uid!!).setValue(UserModel(uid,password,email,nickname,""))
                             FBAuth.setDisplayName(nickname) // displayName의 값을 nickname으로 변경
-
                             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, MyHomeActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //회원가입하면 뒤에있는 엑티비티 없애기
                             startActivity(intent)

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.leaf.MainActivity
 import com.example.leaf.R
+import com.example.leaf.Utils.Search.SearchActivity
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.databinding.ActivityLoginBinding
 
