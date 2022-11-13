@@ -6,13 +6,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.leaf.HomeFragment
-import android.widget.Button
 import com.example.leaf.R
 import com.example.leaf.databinding.ActivityMyHomeBinding
 import com.example.leaf.feed.FeedFragment
 import com.example.leaf.setting.settingFragment
-import com.example.leaf.databinding.ActivityMyHomeBinding
-import com.example.leaf.databinding.ActivityProfileEditBinding
 
 private const val TAG_HOME = "home_fragment"
 private const val TAG_FEED = "feed_fragment"

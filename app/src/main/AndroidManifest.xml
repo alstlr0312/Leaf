@@ -84,7 +84,6 @@
         </activity>
         <activity
             android:name=".food.FoodwriteActivity"
-            android:name=".auth.WriteActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -93,7 +92,6 @@
 
         <activity
             android:name=".auth.WriteActivity"
-            android:name=".feed.PostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
