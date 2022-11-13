@@ -2,17 +2,21 @@ package com.example.leaf.house
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.leaf.R
 import com.example.leaf.Utils.FBRef
+import com.example.leaf.auth.UserModel
 import com.example.leaf.feed.FeedFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -21,12 +25,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class houseAdapter(val item : ArrayList<houseModel>) : RecyclerView.Adapter<houseAdapter.Viewholder>() {
+class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : RecyclerView.Adapter<houseAdapter.Viewholder>() {
     private val houseKeyList = arrayListOf<String>()
     private val houseDataList = arrayListOf<houseModel>()
 
     private val TAG = FeedFragment::class.java.simpleName
 
+    lateinit var auth: FirebaseAuth
+    lateinit var uid: String
+    lateinit var followingsData : UserModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): houseAdapter.Viewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_list,parent,false)
@@ -61,6 +68,58 @@ class houseAdapter(val item : ArrayList<houseModel>) : RecyclerView.Adapter<hous
         holder.itemView.setOnClickListener{
             onClick(context,position)
         }
+        var query = FBRef.userRef.child(item.get(position).uid)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                followingsData = snapshot.getValue(UserModel::class.java)!!
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        auth = FirebaseAuth.getInstance()
+        uid = auth.currentUser?.uid.toString()
+
+        if (mydata.followings.contains(item.get(position).uid)) {
+            holder.follow_btn.text = "UNFOLLOW"
+            holder.follow_btn.setBackgroundColor(Color.LTGRAY)
+            holder.follow_btn.setTextColor(Color.BLACK)
+            holder.follow_btn.setOnClickListener {
+                followingsData.followerCount--
+                FBRef.userRef.child(item.get(position).uid).child("followers")
+                    .child(mydata.uid).removeValue()
+                FBRef.userRef.child(item.get(position).uid).child("followerCount")
+                    .setValue(followingsData.followerCount)
+
+                mydata.followingCount--
+                FBRef.userRef.child(uid).child("followings")
+                    .child(item.get(position).uid).removeValue()
+                FBRef.userRef.child(uid).child("followingCount")
+                    .setValue(mydata.followingCount)
+            }
+        }
+        else {
+            holder.follow_btn.text = "FOLLOW"
+            holder.follow_btn.setBackgroundColor(Color.BLUE)
+            holder.follow_btn.setTextColor(Color.WHITE)
+            holder.follow_btn.setOnClickListener {
+                followingsData.followers.put(uid, true)
+                followingsData.followerCount++
+                FBRef.userRef.child(item.get(position).uid).child("followers")
+                    .setValue(followingsData.followers)
+                FBRef.userRef.child(item.get(position).uid).child("followerCount")
+                    .setValue(followingsData.followerCount)
+
+                mydata.followings.put(item.get(position).uid, true)
+                mydata.followingCount++
+                FBRef.userRef.child(uid).child("followings")
+                    .setValue(mydata.followings)
+                FBRef.userRef.child(uid).child("followingCount")
+                    .setValue(mydata.followingCount)
+            }
+        }
     }
 
 
@@ -72,6 +131,7 @@ class houseAdapter(val item : ArrayList<houseModel>) : RecyclerView.Adapter<hous
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
     }
 
 
