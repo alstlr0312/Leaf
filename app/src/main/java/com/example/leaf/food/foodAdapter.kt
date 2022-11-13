@@ -46,7 +46,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
     }
 
     override fun onBindViewHolder(holder: foodAdapter.Viewholder, position: Int) {
-        //getData()
+        getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
         CoroutineScope(Dispatchers.Main).launch {
@@ -147,8 +147,10 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(foodModel::class.java)
-                    foodDataList.add(item!!)
-                    foodKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        foodDataList.add(item!!)
+                        foodKeyList.add(dataModel.key.toString())
+                    }
                 }
                 foodKeyList.reverse()
                 foodDataList.reverse()

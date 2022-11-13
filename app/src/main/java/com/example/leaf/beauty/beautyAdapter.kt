@@ -47,7 +47,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
     }
 
     override fun onBindViewHolder(holder: beautyAdapter.Viewholder, position: Int) {
-        //getData()
+        getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
 
@@ -150,8 +150,10 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(beautyModel::class.java)
-                    beautyDataList.add(item!!)
-                    beautyKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        beautyDataList.add(item!!)
+                        beautyKeyList.add(dataModel.key.toString())
+                    }
                 }
                 beautyKeyList.reverse()
                 beautyDataList.reverse()
