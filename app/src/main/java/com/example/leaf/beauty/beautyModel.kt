@@ -8,5 +8,6 @@ class beautyModel (
     val date : String = "",
     val imUrl : String = "",
     val star : String = "",
+    val key : String ="",
     val favorite :MutableMap<String,Boolean> = HashMap()
 )

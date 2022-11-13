@@ -84,7 +84,7 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
                         Log.d("check", downloadUri.toString())
                     }
                 }
