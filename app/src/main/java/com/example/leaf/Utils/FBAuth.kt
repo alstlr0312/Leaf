@@ -17,9 +17,9 @@ object FBAuth {
         return auth.currentUser?.email.toString()
     }
 
-    /*fun getDisplayName() : String{
+    fun getDisplayName() : String{
         return auth.currentUser?.displayName.toString()
-    }*/
+    }
 
     fun getTime() : String{
         val currentDataTime = Calendar.getInstance().time

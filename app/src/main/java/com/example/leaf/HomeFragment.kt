@@ -29,9 +29,20 @@ import com.example.leaf.movie.MoviewriteActivity
 
 
 class HomeFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): FrameLayout {
-        val binding = FragmentHomeBinding.inflate(inflater,container,false)
+    //프래그먼트와 레이아웃을 연결시켜주는 부분
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): FrameLayout {
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val profileName = binding.mainProfile
+        val profileintroduce = binding.mainIntroduce
+        val key = FBRef.profileRef.key.toString()
+        val storageReference = Firebase.storage.reference.child(key + ".png")
+        val imageViewFromFB = binding.profileImageview
         binding.foodplusBtn.setOnClickListener {
             startActivity(Intent(activity, FoodwriteActivity::class.java))
         }
@@ -46,24 +57,8 @@ class HomeFragment : Fragment() {
         binding.houseplusBtn.setOnClickListener {
             startActivity(Intent(activity, housewriteActivity::class.java))
         }
-
-        private lateinit var auth: FirebaseAuth
-    //프래그먼트와 레이아웃을 연결시켜주는 부분
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): FrameLayout {
-        val binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val profileName = binding.mainProfile
-        val profileintroduce = binding.mainIntroduce
-        val key = FBRef.profileRef.key.toString()
-        val storageReference = Firebase.storage.reference.child(key +".png")
-        val imageViewFromFB = binding.profileImageview
-
-        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener {
-            task ->
-            if(task.isSuccessful)
+        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
+            if (task.isSuccessful)
                 Glide.with(this)
                     .load(task.result)
                     .into(imageViewFromFB)
@@ -86,9 +81,6 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
-
-
-
 }
 
 

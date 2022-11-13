@@ -51,8 +51,6 @@ class MyHomeActivity : AppCompatActivity() {
         if (home != null){
             fragTransaction.hide(home)
         }
-
-
         if (feed != null){
             fragTransaction.hide(feed)
         }
@@ -71,7 +69,6 @@ class MyHomeActivity : AppCompatActivity() {
                 fragTransaction.show(feed)
             }
         }
-
         else if (tag == TAG_SET){
             if (set != null){
                 fragTransaction.show(set)
