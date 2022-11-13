@@ -7,5 +7,6 @@ class beautyModel (
     val board : String = "",
     val date : String = "",
     val imUrl : String = "",
-    val star : String = ""
+    val star : String = "",
+    val favorite : String
 )

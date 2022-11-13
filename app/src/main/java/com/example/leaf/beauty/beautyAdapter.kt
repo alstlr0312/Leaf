@@ -48,6 +48,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
+
             }
 
 
@@ -62,10 +63,10 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
 
 
 
-
         holder.itemView.setOnClickListener{
             onClick(context,position)
         }
+        //좋아요 기능 이벤트 구현하기
     }
 
 
@@ -77,10 +78,17 @@ class beautyAdapter(val item : ArrayList<beautyModel>) : RecyclerView.Adapter<be
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        val favorite = itemView.findViewById<ImageView>(R.id.heart)
+
+    }
+    fun heartonClick(itemView: View) {
+        //좋아요 버튼 클릭시
+        //빈 하트에서 꽉찬 하트로 바꿔줘야함.
+
     }
 
-
     fun onClick(context: Context, position: Int) {
+
         val intent = Intent(context,beautypostAtivity::class.java)
         intent.putExtra("key",beautyKeyList[position])
         context.startActivity(intent)

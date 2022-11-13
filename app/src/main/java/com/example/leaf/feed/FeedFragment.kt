@@ -64,7 +64,7 @@ class FeedFragment : Fragment() {
             }
 
         }
-
+        //미용 피드를 클릭했을 때
         binding.beBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getbeautyData()
