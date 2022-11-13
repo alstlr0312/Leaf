@@ -32,6 +32,10 @@ class MyHomeActivity : AppCompatActivity() {
             }
             true
         }
+        binding.mainEditbtn.setOnClickListener {
+            val intent = Intent(this, ProfileEditActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setFragment(tag: String, fragment: Fragment) {
@@ -78,12 +82,5 @@ class MyHomeActivity : AppCompatActivity() {
         }
 
         fragTransaction.commitAllowingStateLoss()
-        binding = ActivityMyHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.mainEditbtn.setOnClickListener {
-            val intent = Intent(this, ProfileEditActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 }
