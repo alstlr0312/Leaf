@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_feedFragment2"
             app:destination="@id/feedFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment2"
+            app:destination="@id/settingFragment2" />
     </fragment>
     <fragment
         android:id="@+id/feedFragment2"
@@ -20,6 +23,21 @@
         android:label="FeedFragment" >
         <action
             android:id="@+id/action_feedFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_feedFragment2_to_settingFragment2"
+            app:destination="@id/settingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment2"
+        android:name="com.example.leaf.setting.settingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment2_to_feedFragment2"
+            app:destination="@id/feedFragment2" />
+        <action
+            android:id="@+id/action_settingFragment2_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
