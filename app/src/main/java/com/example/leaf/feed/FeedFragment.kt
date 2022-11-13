@@ -1,5 +1,6 @@
 package com.example.leaf.feed
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
+import com.example.leaf.auth.UserModel
 import com.example.leaf.beauty.beautyAdapter
 import com.example.leaf.beauty.beautyModel
 import com.example.leaf.databinding.FragmentFeedBinding
@@ -17,6 +20,7 @@ import com.example.leaf.house.houseAdapter
 import com.example.leaf.house.houseModel
 import com.example.leaf.movie.movieAdapter
 import com.example.leaf.movie.movieModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -40,15 +44,22 @@ class FeedFragment : Fragment() {
     private val houseDataList = arrayListOf<houseModel>()
     private val houseKeyList = arrayListOf<String>()
 
+    private lateinit var myData : UserModel
+    lateinit var auth: FirebaseAuth
+    lateinit var uid: String
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): FrameLayout {
        val binding = FragmentFeedBinding.inflate(inflater,container,false)
+
+        getMyData()
 
         binding.moBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getmovieData()
                 layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
-                movieAdapter =  movieAdapter(movieDataList)
+                movieAdapter =  movieAdapter(movieDataList,myData)
+                notifyMovieChange(movieAdapter)
                 binding.rvPostList.adapter =  movieAdapter
             }
 
@@ -59,7 +70,8 @@ class FeedFragment : Fragment() {
                 getfoodData()
                 layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
-                foodAdapter= foodAdapter(foodDataList)
+                foodAdapter= foodAdapter(foodDataList,myData)
+                notifyfoodChange(foodAdapter)
                 binding.rvPostList.adapter = foodAdapter
             }
 
@@ -70,7 +82,8 @@ class FeedFragment : Fragment() {
                 getbeautyData()
                 layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
-                beautyAdapter = beautyAdapter(beautyDataList)
+                beautyAdapter = beautyAdapter(beautyDataList,myData)
+                notifyBeautyChange(beautyAdapter)
                 binding.rvPostList.adapter = beautyAdapter
             }
 
@@ -81,7 +94,8 @@ class FeedFragment : Fragment() {
                 gethouseData()
                 layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
-                houseAdapter = houseAdapter(houseDataList)
+                houseAdapter = houseAdapter(houseDataList,myData)
+                notifyhouseChange(houseAdapter)
                 binding.rvPostList.adapter = houseAdapter
             }
 
@@ -93,6 +107,30 @@ class FeedFragment : Fragment() {
     }
 
 
+    private fun getMyData(){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(dataModel in dataSnapshot.children){
+
+                    Log.d(TAG,dataModel.toString())
+
+                    val item = dataModel.getValue(UserModel::class.java)
+                    if(item?.uid == FBAuth.auth.currentUser?.uid){
+                        myData = item!!
+                        Log.d(TAG,myData.toString())
+                    }
+                }
+                //Log.d(TAG,userDataList.toString())
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+
+                Log.w(TAG, "Feed:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+
     private fun getmovieData(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -102,8 +140,11 @@ class FeedFragment : Fragment() {
                     Log.d(TAG,dataModel.toString())
 
                     val item = dataModel.getValue(movieModel::class.java)
-                    movieDataList.add(item!!)
-                    movieKeyList.add(dataModel.key.toString())
+                    if(myData.followings.contains(item!!.uid))
+                    {
+                        movieDataList.add(item!!)
+                        movieKeyList.add(dataModel.key.toString())
+                    }
                 }
                 movieKeyList.reverse()
                 movieDataList.reverse()
@@ -127,8 +168,10 @@ class FeedFragment : Fragment() {
                     Log.d(TAG,dataModel.toString())
 
                     val item = dataModel.getValue(foodModel::class.java)
-                    foodDataList.add(item!!)
-                    foodKeyList.add(dataModel.key.toString())
+                    if(myData.followings.contains(item!!.uid)) {
+                        foodDataList.add(item!!)
+                        foodKeyList.add(dataModel.key.toString())
+                    }
                 }
                 foodKeyList.reverse()
                 foodDataList.reverse()
@@ -152,8 +195,10 @@ class FeedFragment : Fragment() {
                     Log.d(TAG,dataModel.toString())
 
                     val item = dataModel.getValue(beautyModel::class.java)
-                    beautyDataList.add(item!!)
-                    beautyKeyList.add(dataModel.key.toString())
+                    if(myData.followings.contains(item!!.uid)) {
+                        beautyDataList.add(item!!)
+                        beautyKeyList.add(dataModel.key.toString())
+                    }
                 }
                 beautyKeyList.reverse()
                 beautyDataList.reverse()
@@ -177,8 +222,10 @@ class FeedFragment : Fragment() {
                     Log.d(TAG,dataModel.toString())
 
                     val item = dataModel.getValue(houseModel::class.java)
-                    houseDataList.add(item!!)
-                    houseKeyList.add(dataModel.key.toString())
+                    if(myData.followings.contains(item!!.uid)) {
+                        houseDataList.add(item!!)
+                        houseKeyList.add(dataModel.key.toString())
+                    }
                 }
                 houseKeyList.reverse()
                 houseDataList.reverse()
@@ -191,5 +238,77 @@ class FeedFragment : Fragment() {
             }
         }
         FBRef.houseRef.addValueEventListener(postListener)
+    }
+    private fun notifyMovieChange(movieAdapter: movieAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                movieDataList.clear()
+                getmovieData()
+                for(dataModel in dataSnapshot.children){
+                }
+                movieAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyfoodChange(foodAdapter: foodAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                foodDataList.clear()
+                getfoodData()
+                for(dataModel in dataSnapshot.children){
+                }
+                foodAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyBeautyChange(beautyAdapter: beautyAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                beautyDataList.clear()
+                getbeautyData()
+                for(dataModel in dataSnapshot.children){
+                }
+                beautyAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyhouseChange(houseAdapter: houseAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                houseDataList.clear()
+                gethouseData()
+                for(dataModel in dataSnapshot.children){
+                }
+                houseAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
     }
 }
