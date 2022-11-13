@@ -88,7 +88,6 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
            Log.d("clickg","click g")
        }
    }else { //좋아요 안눌렀을 경우
-       // holder.favorite.setImageResource(R.drawable.heart)
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart_full)
            Log.d("clickfav","click fav")

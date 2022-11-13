@@ -84,7 +84,17 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         })
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
-
+        if(item.get(position).favorite.contains(mydata.uid)) {//좋아요 누른 상태일때
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart)
+                Log.d("clickg","click g")
+            }
+        }else { //좋아요 안눌렀을 경우
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart_full)
+                Log.d("clickfav","click fav")
+            }
+        }
         if (mydata.followings.contains(item.get(position).uid)) {
             holder.follow_btn.text = "UNFOLLOW"
             holder.follow_btn.setBackgroundColor(Color.LTGRAY)
@@ -134,6 +144,7 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
     }
 
