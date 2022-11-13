@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.leaf.HomeFragment
 import com.example.leaf.R
+import com.example.leaf.Utils.Search.SearchActivity
 import com.example.leaf.databinding.ActivityMyHomeBinding
 import com.example.leaf.feed.FeedFragment
 import com.example.leaf.setting.settingFragment
@@ -34,6 +35,10 @@ class MyHomeActivity : AppCompatActivity() {
         }
         binding.mainEditbtn.setOnClickListener {
             val intent = Intent(this, ProfileEditActivity::class.java)
+            startActivity(intent)
+        }
+        binding.mainGlass.setOnClickListener{
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
     }
