@@ -11,7 +11,6 @@ import com.example.leaf.databinding.ActivityMyHomeBinding
 import com.example.leaf.feed.FeedFragment
 import com.example.leaf.setting.settingFragment
 
-
 private const val TAG_HOME = "home_fragment"
 private const val TAG_FEED = "feed_fragment"
 private const val TAG_SET = "setting_fragement"
@@ -33,6 +32,10 @@ class MyHomeActivity : AppCompatActivity() {
             }
             true
         }
+        binding.mainEditbtn.setOnClickListener {
+            val intent = Intent(this, ProfileEditActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setFragment(tag: String, fragment: Fragment) {
@@ -51,6 +54,8 @@ class MyHomeActivity : AppCompatActivity() {
         if (home != null){
             fragTransaction.hide(home)
         }
+
+
         if (feed != null){
             fragTransaction.hide(feed)
         }
@@ -69,6 +74,7 @@ class MyHomeActivity : AppCompatActivity() {
                 fragTransaction.show(feed)
             }
         }
+
         else if (tag == TAG_SET){
             if (set != null){
                 fragTransaction.show(set)
@@ -76,12 +82,5 @@ class MyHomeActivity : AppCompatActivity() {
         }
 
         fragTransaction.commitAllowingStateLoss()
-        binding = ActivityMyHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.mainEditbtn.setOnClickListener {
-            val intent = Intent(this, ProfileEditActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 }
