@@ -45,7 +45,7 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
     }
 
     override fun onBindViewHolder(holder: houseAdapter.Viewholder, position: Int) {
-        getData()
+        //getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
 

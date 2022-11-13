@@ -13,6 +13,9 @@ import com.example.leaf.databinding.FragmentHomeBinding
 import com.bumptech.glide.Glide
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
+import com.example.leaf.Utils.FollowList.FollowListActivity
+import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.UserModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -30,6 +33,7 @@ import com.example.leaf.movie.MoviewriteActivity
 
 class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
+    lateinit var uid :String
 
     //프래그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(
@@ -78,6 +82,34 @@ class HomeFragment : Fragment() {
 
             }
         })
+
+        uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var query = FBRef.userRef.child(uid)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                binding.homeFollowerCount.setText(snapshot.getValue(UserModel::class.java)!!.followerCount.toString())
+                binding.homeFollowingCount.setText(snapshot.getValue(UserModel::class.java)!!.followingCount.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        binding.homeFollowerCount.setOnClickListener{
+            val intent = Intent(activity, FollowListActivity::class.java)
+            intent.putExtra("Kind", "Follower")
+            startActivity(intent)
+        }
+
+
+        binding.homeFollowingCount.setOnClickListener{
+            val intent = Intent(activity, FollowListActivity::class.java)
+            intent.putExtra("Kind", "Following")
+            startActivity(intent)
+        }
 
         return binding.root
     }

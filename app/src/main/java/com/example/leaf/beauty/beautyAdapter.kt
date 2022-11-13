@@ -47,7 +47,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
     }
 
     override fun onBindViewHolder(holder: beautyAdapter.Viewholder, position: Int) {
-        getData()
+        //getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
 

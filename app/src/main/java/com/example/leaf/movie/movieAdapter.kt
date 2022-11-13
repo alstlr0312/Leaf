@@ -46,7 +46,7 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
     }
 
     override fun onBindViewHolder(holder: movieAdapter.Viewholder, position: Int) {
-        getData()
+        //getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
 

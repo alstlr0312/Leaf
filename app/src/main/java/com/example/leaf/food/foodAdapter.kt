@@ -46,7 +46,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
     }
 
     override fun onBindViewHolder(holder: foodAdapter.Viewholder, position: Int) {
-        getData()
+        //getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
         CoroutineScope(Dispatchers.Main).launch {
