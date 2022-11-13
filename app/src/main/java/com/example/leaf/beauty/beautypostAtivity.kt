@@ -86,7 +86,7 @@ class beautypostAtivity : AppCompatActivity() {
                     val dataModel = dataSnapshot.getValue(beautyModel::class.java)
                     Log.d(ContentValues.TAG, dataSnapshot.toString())
                     binding.postTitle.text = dataModel?.title
-                    binding.postName.text = dataModel?.uid
+                    binding.postName.text = dataModel?.user
                     binding.postDate.text = dataModel?.date
                     binding.starrate.text = dataModel?.star
                     binding.postText1.text = dataModel?.oneline

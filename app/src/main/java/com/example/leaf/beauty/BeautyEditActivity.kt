@@ -40,11 +40,12 @@ class BeautyEditActivity : AppCompatActivity() {
         getImageData(key)
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getUid()
+            val username = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
+            val uid = FBAuth.getUid()
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -74,7 +75,7 @@ class BeautyEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(beautyModel(title,username,oneline,board,time,imuri,star,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }

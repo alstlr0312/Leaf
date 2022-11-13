@@ -39,11 +39,12 @@ class FoodEditActivity : AppCompatActivity() {
         getImageData(key)
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getUid()
+            val username = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
+            val uid = FBAuth.getUid()
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -73,7 +74,7 @@ class FoodEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(foodModel(title,username,oneline,board,time,imuri,star,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }

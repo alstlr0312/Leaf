@@ -63,19 +63,6 @@ class HomeFragment : Fragment() {
         }
         storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
             if (task.isSuccessful)
-        binding.movieplusBtn.setOnClickListener {
-            startActivity(Intent(activity, MoviewriteActivity::class.java))
-        }
-
-        binding.beautyplusBtn.setOnClickListener {
-            startActivity(Intent(activity, BeautywriteActivity::class.java))
-        }
-        binding.houseplusBtn.setOnClickListener {
-            startActivity(Intent(activity, housewriteActivity::class.java))
-        }
-        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener {
-            task ->
-            if(task.isSuccessful)
                 Glide.with(this)
                     .load(task.result)
                     .into(imageViewFromFB)

@@ -32,11 +32,12 @@ class MoviewriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
+            val username = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.movieratingBar.rating.toString()
+            val uid = FBAuth.getUid()
             Log.d(TAG,title)
             val key = FBRef.movieRef.push().key.toString()
             if(isImageUpload) {
@@ -69,7 +70,7 @@ class MoviewriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.movieRef
                             .child(key)
-                            .setValue(movieModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(movieModel(title,username,oneline,board,time,imuri,star,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }

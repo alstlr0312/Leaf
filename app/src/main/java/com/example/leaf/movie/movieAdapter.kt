@@ -46,7 +46,7 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
     }
 
     override fun onBindViewHolder(holder: movieAdapter.Viewholder, position: Int) {
-        //getData()
+        getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
 
@@ -61,7 +61,7 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         }
         holder.title.text=item.get(position).title
         Log.d("check33", item.get(position).title)
-        holder.writer.text=item.get(position).uid
+        holder.writer.text=item.get(position).user
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star

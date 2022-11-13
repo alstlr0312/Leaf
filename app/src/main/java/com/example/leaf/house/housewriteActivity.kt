@@ -32,12 +32,12 @@ class housewriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
-            // val eid = FBAuth.getDisplayName()
+            val username = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.houseratingBar.rating.toString()
+            val uid = FBAuth.getUid()
             Log.d(TAG,title)
             val key = FBRef.houseRef.push().key.toString()
             if(isImageUpload) {
@@ -71,7 +71,7 @@ class housewriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.houseRef
                             .child(key)
-                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(houseModel(title,username,oneline,board,time,imuri,star,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }

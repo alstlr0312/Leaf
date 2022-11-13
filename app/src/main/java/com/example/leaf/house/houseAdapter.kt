@@ -60,7 +60,7 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         }
         holder.title.text=item.get(position).title
         Log.d("check33", item.get(position).title)
-        holder.writer.text=item.get(position).uid
+        holder.writer.text=item.get(position).user
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star
