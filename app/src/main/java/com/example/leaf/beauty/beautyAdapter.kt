@@ -34,6 +34,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
 
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
+    lateinit var favoriteData : beautyModel
     lateinit var followingsData : UserModel
 
 
@@ -86,6 +87,9 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart)
            Log.d("clickg","click g")
+           favoriteData.favoriteCount--
+           FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+               .setValue(favoriteData.favoriteCount)
        }
    }else { //좋아요 안눌렀을 경우
        holder.favorite.setOnClickListener {
