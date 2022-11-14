@@ -34,7 +34,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
 
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
-    lateinit var favoriteData : beautyModel
+    //lateinit var favoriteData : beautyModel
     lateinit var followingsData : UserModel
 
 
@@ -84,20 +84,27 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
    if(item.get(position).favorite.contains(mydata.uid)) {//좋아요 누른 상태일때
+       holder.favorite.setImageResource(R.drawable.heart_full)
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart)
            Log.d("clickg","click g")
-           favoriteData.favoriteCount--
-           FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
-               .setValue(favoriteData.favoriteCount)
+           //favoriteData.favoriteCount--
+           FBRef.beautyRef.child(item.get(position).key).child("favorite")
+               .child(mydata.uid).removeValue()
+          // FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+            //   .setValue(favoriteData.favoriteCount)
        }
    }else { //좋아요 안눌렀을 경우
+
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart_full)
            Log.d("clickfav","click fav")
+         //  favoriteData.favoriteCount++
            item.get(position).favorite.put(mydata.uid, true)
            FBRef.beautyRef.child(item.get(position).key).child("favorite")
                .setValue( item.get(position).favorite)
+         //  FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+           //    .setValue(favoriteData.favoriteCount)
        }
    }
         if (mydata.followings.contains(item.get(position).uid)) {
