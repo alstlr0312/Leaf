@@ -93,6 +93,9 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart_full)
                 Log.d("clickfav","click fav")
+                item.get(position).favorite.put(mydata.uid, true)
+                FBRef.movieRef.child(item.get(position).key).child("favorite")
+                    .setValue( item.get(position).favorite)
             }
         }
         if (mydata.followings.contains(item.get(position).uid)) {
