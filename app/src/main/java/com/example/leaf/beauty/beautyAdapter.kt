@@ -34,6 +34,7 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
 
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
+    lateinit var favoriteData : beautyModel
     lateinit var followingsData : UserModel
 
 
@@ -50,7 +51,6 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
@@ -66,7 +66,6 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star
-
         holder.itemView.setOnClickListener{
             onClick(context,position)
         }
@@ -84,7 +83,23 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         })
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
-
+   if(item.get(position).favorite.contains(mydata.uid)) {//좋아요 누른 상태일때
+       holder.favorite.setOnClickListener {
+           holder.favorite.setImageResource(R.drawable.heart)
+           Log.d("clickg","click g")
+           favoriteData.favoriteCount--
+           FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+               .setValue(favoriteData.favoriteCount)
+       }
+   }else { //좋아요 안눌렀을 경우
+       holder.favorite.setOnClickListener {
+           holder.favorite.setImageResource(R.drawable.heart_full)
+           Log.d("clickfav","click fav")
+           item.get(position).favorite.put(mydata.uid, true)
+           FBRef.beautyRef.child(item.get(position).key).child("favorite")
+               .setValue( item.get(position).favorite)
+       }
+   }
         if (mydata.followings.contains(item.get(position).uid)) {
             holder.follow_btn.text = "UNFOLLOW"
             holder.follow_btn.setBackgroundColor(Color.LTGRAY)
@@ -134,9 +149,9 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
     }
-
 
     fun onClick(context: Context, position: Int) {
         val intent = Intent(context,beautypostAtivity::class.java)
