@@ -11,5 +11,6 @@ class foodModel  (
     val imUrl : String = "",
     val star : String = "",
     val key : String ="",
-    val favorite :MutableMap<String,Boolean> = HashMap()
+    val favorite :MutableMap<String,Boolean> = HashMap(),
+    var favoriteCount : Int = 0
 )

@@ -87,13 +87,14 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart)
            Log.d("clickg","click g")
-           //favoriteData.favoriteCount--
+           item.get(position).favoriteCount--
            FBRef.beautyRef.child(item.get(position).key).child("favorite")
                .child(mydata.uid).removeValue()
-          // FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
-            //   .setValue(favoriteData.favoriteCount)
+           FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+              .setValue(item.get(position).favoriteCount)
        }
    }else { //좋아요 안눌렀을 경우
+       holder.favorite.setImageResource(R.drawable.heart)
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart_full)
            Log.d("clickfav","click fav")
@@ -103,8 +104,8 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
                .setValue( item.get(position).favorite)
            FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
                .setValue(item.get(position).favoriteCount)
-         //  FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
-           //    .setValue(favoriteData.favoriteCount)
+          FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+              .setValue(item.get(position).favoriteCount)
        }
    }
         if (mydata.followings.contains(item.get(position).uid)) {

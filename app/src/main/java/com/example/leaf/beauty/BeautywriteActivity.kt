@@ -93,7 +93,7 @@ class BeautywriteActivity : AppCompatActivity() {
             /*FBRef.boardRef
                 .child(key)
                 .setValue(BoardModel(title,eid,ukey,dogname,breed,lostday,content,time))*/
-
+            Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)

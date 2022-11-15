@@ -86,16 +86,23 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart)
                 Log.d("clickg","click g")
+                item.get(position).favoriteCount--
                 FBRef.foodRef.child(item.get(position).key).child("favorite")
                     .child(mydata.uid).removeValue()
+                FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
             }
         }else { //좋아요 안눌렀을 경우
+            holder.favorite.setImageResource(R.drawable.heart)
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart_full)
                 Log.d("clickfav","click fav")
+                item.get(position).favoriteCount++
                 item.get(position).favorite.put(mydata.uid, true)
                 FBRef.foodRef.child(item.get(position).key).child("favorite")
                     .setValue( item.get(position).favorite)
+                FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
             }
         }
         if (mydata.followings.contains(item.get(position).uid)) {
