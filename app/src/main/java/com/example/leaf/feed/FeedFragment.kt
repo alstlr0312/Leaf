@@ -52,6 +52,7 @@ class FeedFragment : Fragment() {
        val binding = FragmentFeedBinding.inflate(inflater,container,false)
 
         getMyData()
+
         binding.moBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getmovieData()
@@ -70,6 +71,7 @@ class FeedFragment : Fragment() {
                 layoutManager = GridLayoutManager(requireContext(),1)
                 setHasFixedSize(true)
                 foodAdapter= foodAdapter(foodDataList,myData)
+                notifyfoodChange(foodAdapter)
                 binding.rvPostList.adapter = foodAdapter
             }
 
@@ -111,7 +113,7 @@ class FeedFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
 
-                    //Log.d(TAG,dataModel.toString())
+                    Log.d(TAG,dataModel.toString())
 
                     val item = dataModel.getValue(UserModel::class.java)
                     if(item?.uid == FBAuth.auth.currentUser?.uid){
@@ -128,107 +130,12 @@ class FeedFragment : Fragment() {
         }
         FBRef.userRef.addValueEventListener(userListner)
     }
-    private fun notifyMovieChange(movieAdapter: movieAdapter){
-        val userListner = object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                movieDataList.clear()
-                for(dataModel in dataSnapshot.children){
-                    Log.d(TAG,"notify")
-                    val item = dataModel.getValue(movieModel::class.java)
-                    if(myData.followings.contains(item!!.uid))
-                    {
-                        movieDataList.add(item!!)
-                        movieKeyList.add(dataModel.key.toString())
-                    }
-                    }
-                movieAdapter.notifyDataSetChanged()
-                }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-            //Log.d(TAG,userDataList.toString())
-        }
-        FBRef.userRef.addValueEventListener(userListner)
-    }
-    private fun notifyfoodChange(foodAdapter: foodAdapter){
-        val userListner = object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                foodDataList.clear()
-                for(dataModel in dataSnapshot.children){
-                    Log.d(TAG,"notify")
-                    val item = dataModel.getValue(foodModel::class.java)
-                    if(myData.followings.contains(item!!.uid))
-                    {
-                        foodDataList.add(item!!)
-                        foodKeyList.add(dataModel.key.toString())
-                    }
-                }
-                foodAdapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-            //Log.d(TAG,userDataList.toString())
-        }
-        FBRef.userRef.addValueEventListener(userListner)
-    }
-    private fun notifyBeautyChange(beautyAdapter: beautyAdapter){
-        val userListner = object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                beautyDataList.clear()
-                for(dataModel in dataSnapshot.children){
-                    Log.d(TAG,"notify")
-                    val item = dataModel.getValue(beautyModel::class.java)
-                    if(myData.followings.contains(item!!.uid))
-                    {
-                        beautyDataList.add(item!!)
-                        beautyKeyList.add(dataModel.key.toString())
-                    }
-                }
-                beautyAdapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-            //Log.d(TAG,userDataList.toString())
-        }
-        FBRef.userRef.addValueEventListener(userListner)
-    }
-    private fun notifyhouseChange(houseAdapter: houseAdapter){
-        val userListner = object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                houseDataList.clear()
-                for(dataModel in dataSnapshot.children){
-                    Log.d(TAG,"notify")
-                    val item = dataModel.getValue(houseModel::class.java)
-                    if(myData.followings.contains(item!!.uid))
-                    {
-                        houseDataList.add(item!!)
-                        houseKeyList.add(dataModel.key.toString())
-                    }
-                }
-                houseAdapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-            //Log.d(TAG,userDataList.toString())
-        }
-        FBRef.userRef.addValueEventListener(userListner)
-    }
 
     private fun getmovieData(){
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 movieDataList.clear()
+                movieKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -257,6 +164,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 foodDataList.clear()
+                foodKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -284,6 +192,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 beautyDataList.clear()
+                beautyKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -311,6 +220,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 houseDataList.clear()
+                houseKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -332,5 +242,81 @@ class FeedFragment : Fragment() {
             }
         }
         FBRef.houseRef.addValueEventListener(postListener)
+    }
+    private fun notifyMovieChange(movieAdapter: movieAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                movieDataList.clear()
+                movieKeyList.clear()
+                getmovieData()
+                for(dataModel in dataSnapshot.children){
+                }
+                movieAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyfoodChange(foodAdapter: foodAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                foodDataList.clear()
+                foodKeyList.clear()
+                getfoodData()
+                for(dataModel in dataSnapshot.children){
+                }
+                foodAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyBeautyChange(beautyAdapter: beautyAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                beautyDataList.clear()
+                beautyKeyList.clear()
+                getbeautyData()
+                for(dataModel in dataSnapshot.children){
+                }
+                beautyAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
+    }
+    private fun notifyhouseChange(houseAdapter: houseAdapter){
+        val userListner = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                houseDataList.clear()
+                houseKeyList.clear()
+                gethouseData()
+                for(dataModel in dataSnapshot.children){
+                }
+                houseAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            //Log.d(TAG,userDataList.toString())
+        }
+        FBRef.userRef.addValueEventListener(userListner)
     }
 }

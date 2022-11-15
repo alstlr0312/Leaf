@@ -87,11 +87,11 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
        holder.favorite.setOnClickListener {
            holder.favorite.setImageResource(R.drawable.heart)
            Log.d("clickg","click g")
-           item.get(position).favoriteCount--
+           //favoriteData.favoriteCount--
            FBRef.beautyRef.child(item.get(position).key).child("favorite")
                .child(mydata.uid).removeValue()
-           FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
-               .setValue(item.get(position).favoriteCount)
+          // FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+            //   .setValue(favoriteData.favoriteCount)
        }
    }else { //좋아요 안눌렀을 경우
        holder.favorite.setOnClickListener {
@@ -103,6 +103,8 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
                .setValue( item.get(position).favorite)
            FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
                .setValue(item.get(position).favoriteCount)
+         //  FBRef.beautyRef.child(item.get(position).key).child("favoriteCount")
+           //    .setValue(favoriteData.favoriteCount)
        }
    }
         if (mydata.followings.contains(item.get(position).uid)) {
@@ -170,8 +172,10 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(beautyModel::class.java)
-                    beautyDataList.add(item!!)
-                    beautyKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        beautyDataList.add(item!!)
+                        beautyKeyList.add(dataModel.key.toString())
+                    }
                 }
                 beautyKeyList.reverse()
                 beautyDataList.reverse()

@@ -16,6 +16,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.UserModel
 import com.example.leaf.feed.FeedFragment
+import com.example.leaf.food.foodModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -167,8 +168,10 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(movieModel::class.java)
-                    movieDataList.add(item!!)
-                    movieKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        movieDataList.add(item!!)
+                        movieKeyList.add(dataModel.key.toString())
+                    }
                 }
                 movieKeyList.reverse()
                 movieDataList.reverse()

@@ -164,8 +164,10 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(houseModel::class.java)
-                    houseDataList.add(item!!)
-                    houseKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        houseDataList.add(item!!)
+                        houseKeyList.add(dataModel.key.toString())
+                    }
                 }
                 houseKeyList.reverse()
                 houseDataList.reverse()

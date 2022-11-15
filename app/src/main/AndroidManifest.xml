@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Leaf"
         tools:targetApi="31">
         <activity
+            android:name=".Utils.FollowList.FollowListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".auth.ProfileEditActivity"
             android:exported="false">
             <meta-data
@@ -89,7 +96,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".auth.WriteActivity"
             android:exported="false">
