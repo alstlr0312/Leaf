@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) : RecyclerView.Adapter<beautyAdapter.Viewholder>() {
     private val beautyKeyList = arrayListOf<String>()
     private val beautyDataList = arrayListOf<beautyModel>()
-
     private val TAG = FeedFragment::class.java.simpleName
 
     lateinit var auth: FirebaseAuth
