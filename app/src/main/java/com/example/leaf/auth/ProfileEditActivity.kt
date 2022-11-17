@@ -22,6 +22,7 @@ import com.example.leaf.databinding.ActivityProfileEditBinding
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
+import com.example.leaf.beauty.beautyModel
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -42,17 +43,19 @@ class ProfileEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
         initImageViewProfile()
+        initView()
         //이미지이름을 key값으로 저장
         val key = FBRef.profileRef.key.toString()
+        binding.email.text = FBAuth.getEmail() //이메일 가져옴
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
+        val introduce = binding.editIntroduce.text.toString()
         binding.profileBtn.setOnClickListener {
             imageUpload(key)
-            val introduce = binding.editIntroduce.text.toString() //자기소개
             //데이터 1개가 계속 수정되는 방식
-            FBRef.profileRef
-                .setValue(ProfileModel(introduce)) //파이어베이스에 저장
             FBAuth.setDisplayName(profileName.text.toString())
+            FBRef.profileRef
+                .setValue(ProfileModel(FBAuth.getDisplayName(),binding.editIntroduce.text.toString())) //파이어베이스에 저장
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
         }
@@ -60,12 +63,13 @@ class ProfileEditActivity : AppCompatActivity() {
 
     private fun initView() {
 
-        FBRef.profileRef.child("introduce").addValueEventListener(object : ValueEventListener {
+        FBRef.profileRef.addValueEventListener(object : ValueEventListener {
             //onDataChange는 데이터가 변경될때마다 호출된다.
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.getValue<String>()
-                Log.d(TAG, "Value is: $value")
-                binding.editIntroduce.setText(value)
+                val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                binding.editIntroduce.setText(dataModel?.introduce)
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -79,7 +83,6 @@ class ProfileEditActivity : AppCompatActivity() {
 
         binding.profileImageview.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-
             startActivityForResult(gallery,100)
         }
     }
