@@ -29,6 +29,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.FirebaseStorageKtxRegistrar
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 class ProfileEditActivity : AppCompatActivity() {
@@ -45,19 +48,78 @@ class ProfileEditActivity : AppCompatActivity() {
         initImageViewProfile()
         initView()
         //이미지이름을 key값으로 저장
+        val profile = binding.profileImageview
         val key = FBRef.profileRef.key.toString()
+        getImageData(key)
         binding.email.text = FBAuth.getEmail() //이메일 가져옴
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
         val introduce = binding.editIntroduce.text.toString()
         binding.profileBtn.setOnClickListener {
-            imageUpload(key)
-            //데이터 1개가 계속 수정되는 방식
             FBAuth.setDisplayName(profileName.text.toString())
-            FBRef.profileRef
-                .setValue(ProfileModel(FBAuth.getDisplayName(),binding.editIntroduce.text.toString())) //파이어베이스에 저장
+            if(isImageUpload){
+                //이미지 이름을 key값으로 저장
+                //val key = FBRef.profileRef.push().key.toString()
+                val storage = Firebase.storage
+                val storageRef = storage.reference //경로 설정
+                val mountainsRef = storageRef.child(key + ".png")
+
+                val imageView = binding.profileImageview
+                imageView.isDrawingCacheEnabled = true
+                imageView.buildDrawingCache()
+                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                val uploadTask = mountainsRef.putBytes(data)
+                uploadTask.addOnFailureListener {
+                    // Handle unsuccessful uploads
+                }.addOnSuccessListener { taskSnapshot ->
+                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+                val urlTask = uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    mountainsRef.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        val imuri = downloadUri.toString()
+                        FBRef.profileRef
+                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString()))
+                    //파이어베이스에 저장
+
+                    }
+                }
+            }else {
+               //이미지를 안바꾸고 이름이나 소개만 바꿀경우
+            }
+            //imageUpload(key)
+            //데이터 1개가 계속 수정되는 방식
+           // FBRef.profileRef.child(introduce)
+            //    .setValue(ProfileModel(binding.editIntroduce.text.toString())) //파이어베이스에 저장
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
+        }
+    }
+    private fun getImageData(key: String) {
+        // Reference to an image file in Cloud Storage
+        val storageReference = Firebase.storage.reference.child(key + ".png")
+        // ImageView in your Activity
+        val imageView = binding.profileImageview
+        CoroutineScope(Dispatchers.Main).launch {
+            storageReference.downloadUrl.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Glide.with(this@ProfileEditActivity)
+                        .load(task.result)
+                        .into(imageView)
+                } else {
+                }
+            }
         }
     }
 
@@ -84,46 +146,50 @@ class ProfileEditActivity : AppCompatActivity() {
         binding.profileImageview.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery,100)
+            isImageUpload = true
         }
     }
 
     private fun imageUpload(key: String) {
-        //이미지 이름을 key값으로 저장
-        //val key = FBRef.profileRef.push().key.toString()
-        val storage = Firebase.storage
-        val storageRef = storage.reference //경로 설정
-        val mountainsRef = storageRef.child(key + ".png")
+        if(isImageUpload) {
+            //이미지 이름을 key값으로 저장
+            //val key = FBRef.profileRef.push().key.toString()
+            val storage = Firebase.storage
+            val storageRef = storage.reference //경로 설정
+            val mountainsRef = storageRef.child(key + ".png")
 
-        val imageView = binding.profileImageview
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-        val uploadTask = mountainsRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }
-        val urlTask = uploadTask.continueWithTask{
-            task ->
-            if(!task.isSuccessful){
-                task.exception?.let {
-                    throw it
+            val imageView = binding.profileImageview
+            imageView.isDrawingCacheEnabled = true
+            imageView.buildDrawingCache()
+            val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            val uploadTask = mountainsRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener { taskSnapshot ->
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                // ...
+            }
+            val urlTask = uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                mountainsRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    val imuri = downloadUri.toString()
+                    FBRef.profileRef.child(imuri)
+                        .setValue(ProfileModel(imuri)) //파이어베이스에 저장
+                    Log.d("check", downloadUri.toString())
                 }
             }
-            mountainsRef.downloadUrl
-        }.addOnCompleteListener {
-            task ->
-            if(task.isSuccessful){
-                val downloadUri = task.result
-            }
+
         }
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
