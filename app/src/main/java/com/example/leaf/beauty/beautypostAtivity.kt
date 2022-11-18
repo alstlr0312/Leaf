@@ -31,7 +31,6 @@ class beautypostAtivity : AppCompatActivity() {
     private lateinit var key: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_beautypost_ativity)
         key = intent.getStringExtra("key").toString()
 
@@ -92,6 +91,10 @@ class beautypostAtivity : AppCompatActivity() {
                     binding.postText1.text = dataModel?.oneline
                     binding.postText.text = dataModel?.board
                     binding.starrate.text = dataModel?.star
+                    binding.heartrate.text = dataModel?.favoriteCount.toString()
+                    if(dataModel?.favoriteCount!! > 0) {
+                        binding.heart.setImageResource(R.drawable.heart_full)
+                    }
                     val mykey = FBAuth.getUid()
                     val writerUid = dataModel?.uid
                     if(mykey.equals(writerUid)){

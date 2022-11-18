@@ -16,6 +16,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.UserModel
 import com.example.leaf.feed.FeedFragment
+import com.example.leaf.food.foodModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -84,7 +85,30 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         })
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
-
+        if(item.get(position).favorite.contains(mydata.uid)) {//좋아요 누른 상태일때
+            holder.favorite.setImageResource(R.drawable.heart_full)
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart)
+                Log.d("clickg","click g")
+                item.get(position).favoriteCount--
+                FBRef.movieRef.child(item.get(position).key).child("favorite")
+                    .child(mydata.uid).removeValue()
+                FBRef.movieRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
+            }
+        }else { //좋아요 안눌렀을 경우
+            holder.favorite.setImageResource(R.drawable.heart)
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart_full)
+                Log.d("clickfav","click fav")
+                item.get(position).favoriteCount++
+                item.get(position).favorite.put(mydata.uid, true)
+                FBRef.movieRef.child(item.get(position).key).child("favorite")
+                    .setValue( item.get(position).favorite)
+                FBRef.movieRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
+            }
+        }
         if (mydata.followings.contains(item.get(position).uid)) {
             holder.follow_btn.text = "UNFOLLOW"
             holder.follow_btn.setBackgroundColor(Color.LTGRAY)
@@ -134,6 +158,7 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
     }
 
@@ -150,8 +175,10 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(movieModel::class.java)
-                    movieDataList.add(item!!)
-                    movieKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        movieDataList.add(item!!)
+                        movieKeyList.add(dataModel.key.toString())
+                    }
                 }
                 movieKeyList.reverse()
                 movieDataList.reverse()

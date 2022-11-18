@@ -76,7 +76,7 @@ class FeedFragment : Fragment() {
             }
 
         }
-
+        //미용 피드를 클릭했을 때
         binding.beBtn.setOnClickListener {
             binding.rvPostList.apply {
                 getbeautyData()
@@ -135,6 +135,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 movieDataList.clear()
+                movieKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -163,6 +164,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 foodDataList.clear()
+                foodKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -190,6 +192,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 beautyDataList.clear()
+                beautyKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -217,6 +220,7 @@ class FeedFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 houseDataList.clear()
+                houseKeyList.clear()
                 for(dataModel in dataSnapshot.children){
 
                     Log.d(TAG,dataModel.toString())
@@ -244,6 +248,7 @@ class FeedFragment : Fragment() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 movieDataList.clear()
+                movieKeyList.clear()
                 getmovieData()
                 for(dataModel in dataSnapshot.children){
                 }
@@ -262,6 +267,7 @@ class FeedFragment : Fragment() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 foodDataList.clear()
+                foodKeyList.clear()
                 getfoodData()
                 for(dataModel in dataSnapshot.children){
                 }
@@ -280,6 +286,7 @@ class FeedFragment : Fragment() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 beautyDataList.clear()
+                beautyKeyList.clear()
                 getbeautyData()
                 for(dataModel in dataSnapshot.children){
                 }
@@ -298,6 +305,7 @@ class FeedFragment : Fragment() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 houseDataList.clear()
+                houseKeyList.clear()
                 gethouseData()
                 for(dataModel in dataSnapshot.children){
                 }

@@ -51,9 +51,17 @@
             android:id="@+id/main_glass"
             android:layout_width="38dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="42dp"
             android:src="@drawable/glass"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/main_heart"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/heart_full"
+            app:layout_constraintStart_toEndOf="@+id/main_glass"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

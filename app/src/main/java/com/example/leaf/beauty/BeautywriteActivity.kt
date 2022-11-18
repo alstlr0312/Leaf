@@ -32,14 +32,23 @@ class BeautywriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val username = FBAuth.getDisplayName()
+            val ukey = FBAuth.getUid()
+            //val eid = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
-            val uid = FBAuth.getUid()
             Log.d(TAG,title)
+
+            //파이어 베이스 storge에 이미지를 저장
+            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
+            //이미지 이름을 key값으로 저장
             val key = FBRef.beautyRef.push().key.toString()
+
+            //board
+            //  -key
+            //      -boardModel(title, content, uid, time)
+
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -75,7 +84,7 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,username,oneline,board,time,imuri,star,uid))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
                         Log.d("check", downloadUri.toString())
                     }
                 }
@@ -84,7 +93,7 @@ class BeautywriteActivity : AppCompatActivity() {
             /*FBRef.boardRef
                 .child(key)
                 .setValue(BoardModel(title,eid,ukey,dogname,breed,lostday,content,time))*/
-
+            Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
@@ -96,6 +105,47 @@ class BeautywriteActivity : AppCompatActivity() {
             isImageUpload = true
         }
     }
+
+
+
+    private fun imageUpload(key : String){
+        // Get the data from an ImageView as bytes
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+        val mountainsRef = storageRef.child(key+".png")
+
+        val imageView = binding.writeCamera
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = mountainsRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+        }
+
+        val urlTask = uploadTask.continueWithTask { task->
+            if (!task.isSuccessful){
+                task.exception?.let{
+                    throw it
+                }
+            }
+            mountainsRef.downloadUrl
+        }.addOnCompleteListener{ task->
+            if(task.isSuccessful){
+                val downloadUri = task.result
+
+
+            }
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

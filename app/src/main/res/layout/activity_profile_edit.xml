@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_imageview"
             android:layout_width="200dp"
             android:layout_height="165dp"
             android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:background="@android:color/transparent"
             app:civ_border_overlay="true"
             app:civ_border_width="1dp"
@@ -24,22 +25,47 @@
             android:src="@drawable/alsthf"
             />
         <TextView
+            android:id="@+id/emailArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_gravity="center"
+            android:text="이메일"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="123alsthf@naver.com"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailArea" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
+            android:layout_gravity="center"
             android:text="이름"
             android:textSize="27sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
+            app:layout_constraintTop_toBottomOf="@+id/emailArea" />
 
         <EditText
             android:id="@+id/edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
@@ -54,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="자기소개"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -66,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"

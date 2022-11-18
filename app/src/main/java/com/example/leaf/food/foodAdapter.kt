@@ -46,7 +46,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
     }
 
     override fun onBindViewHolder(holder: foodAdapter.Viewholder, position: Int) {
-        //getData()
+        getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
         CoroutineScope(Dispatchers.Main).launch {
@@ -81,7 +81,30 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         })
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
-
+        if(item.get(position).favorite.contains(mydata.uid)) {//좋아요 누른 상태일때
+            holder.favorite.setImageResource(R.drawable.heart_full)
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart)
+                Log.d("clickg","click g")
+                item.get(position).favoriteCount--
+                FBRef.foodRef.child(item.get(position).key).child("favorite")
+                    .child(mydata.uid).removeValue()
+                FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
+            }
+        }else { //좋아요 안눌렀을 경우
+            holder.favorite.setImageResource(R.drawable.heart)
+            holder.favorite.setOnClickListener {
+                holder.favorite.setImageResource(R.drawable.heart_full)
+                Log.d("clickfav","click fav")
+                item.get(position).favoriteCount++
+                item.get(position).favorite.put(mydata.uid, true)
+                FBRef.foodRef.child(item.get(position).key).child("favorite")
+                    .setValue( item.get(position).favorite)
+                FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
+            }
+        }
         if (mydata.followings.contains(item.get(position).uid)) {
             holder.follow_btn.text = "UNFOLLOW"
             holder.follow_btn.setBackgroundColor(Color.LTGRAY)
@@ -131,6 +154,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
+        val favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
     }
 
@@ -147,8 +171,10 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children){
                     val item = dataModel.getValue(foodModel::class.java)
-                    foodDataList.add(item!!)
-                    foodKeyList.add(dataModel.key.toString())
+                    if(mydata.followings.contains(item!!.uid)) {
+                        foodDataList.add(item!!)
+                        foodKeyList.add(dataModel.key.toString())
+                    }
                 }
                 foodKeyList.reverse()
                 foodDataList.reverse()
