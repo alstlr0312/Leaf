@@ -63,7 +63,7 @@ class ProfileEditActivity : AppCompatActivity() {
                 val storage = Firebase.storage
                 val storageRef = storage.reference //경로 설정
                 val mountainsRef = storageRef.child(key + ".png")
-
+                val uid = FBAuth.getUid()
                 val imageView = binding.profileImageview
                 imageView.isDrawingCacheEnabled = true
                 imageView.buildDrawingCache()
@@ -90,7 +90,7 @@ class ProfileEditActivity : AppCompatActivity() {
                         val downloadUri = task.result
                         val imuri = downloadUri.toString()
                         FBRef.profileRef
-                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString()))
+                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString(),uid))
                     //파이어베이스에 저장
 
                     }

@@ -87,7 +87,7 @@ class moviepostActivity : AppCompatActivity() {
                     val dataModel = dataSnapshot.getValue(movieModel::class.java)
                     Log.d(ContentValues.TAG, dataSnapshot.toString())
                     binding.postTitle.text = dataModel?.title
-                    binding.postName.text = dataModel?.user
+                    binding.postName.text = dataModel?.uid
                     binding.postDate.text = dataModel?.date
                     binding.starrate.text = dataModel?.star
                     binding.postText1.text = dataModel?.oneline
