@@ -54,9 +54,9 @@ class ProfileEditActivity : AppCompatActivity() {
         binding.email.text = FBAuth.getEmail() //이메일 가져옴
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
+        FBAuth.setDisplayName(profileName.text.toString())
         val introduce = binding.editIntroduce.text.toString()
         binding.profileBtn.setOnClickListener {
-            FBAuth.setDisplayName(profileName.text.toString())
             if(isImageUpload){
                 //이미지 이름을 key값으로 저장
                 //val key = FBRef.profileRef.push().key.toString()
@@ -96,6 +96,7 @@ class ProfileEditActivity : AppCompatActivity() {
                     }
                 }
             }else {
+              //  FBRef.profileRef.child(introduce).setValue(binding.editIntroduce.text.toString())
                //이미지를 안바꾸고 이름이나 소개만 바꿀경우
             }
             //imageUpload(key)

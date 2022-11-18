@@ -92,6 +92,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/re_title"
+                    android:scaleType="center"
                     app:srcCompat="@android:drawable/ic_menu_gallery" />
 
                 <TextView
