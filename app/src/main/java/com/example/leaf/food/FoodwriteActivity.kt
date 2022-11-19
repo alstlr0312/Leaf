@@ -97,46 +97,6 @@ class FoodwriteActivity : AppCompatActivity() {
     }
 
 
-
-    private fun imageUpload(key : String){
-        // Get the data from an ImageView as bytes
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val mountainsRef = storageRef.child(key+".png")
-
-        val imageView = binding.writeCamera
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-
-        var uploadTask = mountainsRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }
-
-        val urlTask = uploadTask.continueWithTask { task->
-            if (!task.isSuccessful){
-                task.exception?.let{
-                    throw it
-                }
-            }
-            mountainsRef.downloadUrl
-        }.addOnCompleteListener{ task->
-            if(task.isSuccessful){
-                val downloadUri = task.result
-
-
-            }
-        }
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){
