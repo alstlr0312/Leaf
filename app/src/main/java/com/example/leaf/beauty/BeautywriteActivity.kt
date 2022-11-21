@@ -1,5 +1,6 @@
 package com.example.leaf.beauty
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -12,10 +13,15 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityBeautywriteBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 class BeautywriteActivity : AppCompatActivity() {
 
@@ -23,6 +29,7 @@ class BeautywriteActivity : AppCompatActivity() {
 
     private val TAG = BeautywriteActivity::class.java.simpleName
 
+    private var prouri : String = ""
     private var isImageUpload = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +46,7 @@ class BeautywriteActivity : AppCompatActivity() {
             val star = binding.beautyratingBar.rating.toString()
             Log.d(TAG,title)
             val key = FBRef.beautyRef.push().key.toString()
-            val uid = FBAuth.getUid()
-
-            //board
-            //  -key
-            //      -boardModel(title, content, uid, time)
-
+            getpro(FBAuth.getUid())
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -61,10 +63,7 @@ class BeautywriteActivity : AppCompatActivity() {
 
                 var uploadTask = mountainsRef.putBytes(data)
                 uploadTask.addOnFailureListener {
-                    // Handle unsuccessful uploads
                 }.addOnSuccessListener { taskSnapshot ->
-                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                    // ...
                 }
 
                 val urlTask = uploadTask.continueWithTask { task->
@@ -80,15 +79,12 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,uid))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
 
             }
-            /*FBRef.boardRef
-                .child(key)
-                .setValue(BoardModel(title,eid,ukey,dogname,breed,lostday,content,time))*/
             Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
@@ -101,48 +97,24 @@ class BeautywriteActivity : AppCompatActivity() {
             isImageUpload = true
         }
     }
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
-
-
-    private fun imageUpload(key : String){
-        // Get the data from an ImageView as bytes
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val mountainsRef = storageRef.child(key+".png")
-
-        val imageView = binding.writeCamera
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-
-        var uploadTask = mountainsRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }
-
-        val urlTask = uploadTask.continueWithTask { task->
-            if (!task.isSuccessful){
-                task.exception?.let{
-                    throw it
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
                 }
             }
-            mountainsRef.downloadUrl
-        }.addOnCompleteListener{ task->
-            if(task.isSuccessful){
-                val downloadUri = task.result
 
-
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){

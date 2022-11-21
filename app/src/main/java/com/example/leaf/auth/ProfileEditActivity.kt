@@ -132,47 +132,6 @@ class ProfileEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun imageUpload(key: String) {
-        if(isImageUpload) {
-            //이미지 이름을 key값으로 저장
-            //val key = FBRef.profileRef.push().key.toString()
-            val storage = Firebase.storage
-            val storageRef = storage.reference //경로 설정
-            val mountainsRef = storageRef.child(key + ".png")
-
-            val imageView = binding.profileImageview
-            imageView.isDrawingCacheEnabled = true
-            imageView.buildDrawingCache()
-            val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-            val uploadTask = mountainsRef.putBytes(data)
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-            }.addOnSuccessListener { taskSnapshot ->
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                // ...
-            }
-            val urlTask = uploadTask.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
-                    }
-                }
-                mountainsRef.downloadUrl
-            }.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    val imuri = downloadUri.toString()
-                    FBRef.profileRef.child(imuri)
-                        .setValue(ProfileModel(imuri)) //파이어베이스에 저장
-                    Log.d("check", downloadUri.toString())
-                }
-            }
-
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

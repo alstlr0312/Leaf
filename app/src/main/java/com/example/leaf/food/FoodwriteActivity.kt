@@ -13,10 +13,15 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityFoodwriteBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 class FoodwriteActivity : AppCompatActivity() {
 
@@ -25,6 +30,8 @@ class FoodwriteActivity : AppCompatActivity() {
     private val TAG = FoodwriteActivity::class.java.simpleName
 
     private var isImageUpload = false
+
+    private var prouri : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -41,6 +48,7 @@ class FoodwriteActivity : AppCompatActivity() {
             Log.d(TAG,title)
             val key = FBRef.beautyRef.push().key.toString()
             val uid = FBAuth.getUid()
+
 
             if(isImageUpload) {
 
@@ -77,7 +85,7 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid,prouri))
                         Log.d("check", downloadUri.toString())
                         Log.w(ContentValues.TAG, "등록완료")
                     }
@@ -96,6 +104,24 @@ class FoodwriteActivity : AppCompatActivity() {
         }
     }
 
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
+
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
