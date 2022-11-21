@@ -1,8 +1,6 @@
 package com.example.leaf.auth
 
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -10,25 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.Gallery
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.leaf.databinding.ActivityProfileEditBinding
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
-import com.example.leaf.beauty.beautyModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.FirebaseStorageKtxRegistrar
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,8 +38,8 @@ class ProfileEditActivity : AppCompatActivity() {
         initImageViewProfile()
         initView()
         //이미지이름을 key값으로 저장
-        val ukey = FBAuth.getUid()
-        getImageData(ukey)
+        val uid = FBAuth.getUid()
+        getImageData(uid)
         binding.email.text = FBAuth.getEmail() //이메일 가져옴
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
@@ -60,7 +49,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if(isImageUpload){
                 val storage = Firebase.storage
                 val storageRef = storage.reference //경로 설정
-                val mountainsRef = storageRef.child(ukey + ".png")
+                val mountainsRef = storageRef.child("$uid.png")
                 val imageView = binding.profileImageview
                 imageView.isDrawingCacheEnabled = true
                 imageView.buildDrawingCache()
@@ -82,8 +71,8 @@ class ProfileEditActivity : AppCompatActivity() {
                         val downloadUri = task.result
                         val imuri = downloadUri.toString()
                         FBRef.profileRef
-                            .child(ukey)
-                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString(),ukey))
+                            .child(uid)
+                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString(),uid))
                     } } }else { }
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)

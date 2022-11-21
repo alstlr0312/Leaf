@@ -31,6 +31,7 @@ import com.example.leaf.house.housewriteActivity
 import com.example.leaf.movie.MoviewriteActivity
 
 
+
 class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     lateinit var uid :String
@@ -45,7 +46,7 @@ class HomeFragment : Fragment() {
         val profileName = binding.mainProfile
         val profileintroduce = binding.mainIntroduce
         val key = FBRef.profileRef.key.toString()
-        val storageReference = Firebase.storage.reference.child(key + ".png")
+        val storageReference = Firebase.storage.reference.child(FBAuth.getUid() + ".png")
         val imageViewFromFB = binding.profileImageview
         binding.foodplusBtn.setOnClickListener {
             startActivity(Intent(activity, FoodwriteActivity::class.java))
@@ -87,7 +88,6 @@ class HomeFragment : Fragment() {
         var query = FBRef.userRef.child(uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 binding.homeFollowerCount.setText(snapshot.getValue(UserModel::class.java)!!.followerCount.toString())
                 binding.homeFollowingCount.setText(snapshot.getValue(UserModel::class.java)!!.followingCount.toString())
             }
@@ -114,5 +114,4 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 }
-
 

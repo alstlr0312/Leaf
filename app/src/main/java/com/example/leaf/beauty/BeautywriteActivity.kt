@@ -32,7 +32,7 @@ class BeautywriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getUid()
+            val uid = FBAuth.getUid()
             //val eid = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
@@ -84,7 +84,7 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(beautyModel(title,uid,oneline,board,time,imuri,star,key))
                         Log.d("check", downloadUri.toString())
                     }
                 }
