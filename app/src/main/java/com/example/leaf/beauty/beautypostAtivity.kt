@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
-import com.example.leaf.Utils.FavoriteList.FavoriteListActivity
 import com.example.leaf.Utils.FollowList.FollowListActivity
 import com.example.leaf.databinding.ActivityBeautypostAtivityBinding
 
