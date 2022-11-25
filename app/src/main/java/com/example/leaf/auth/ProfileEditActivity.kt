@@ -48,18 +48,16 @@ class ProfileEditActivity : AppCompatActivity() {
         initImageViewProfile()
         initView()
         //이미지이름을 key값으로 저장
-        val profile = binding.profileImageview
+        val ukey = FBAuth.getUid()
         val key = FBRef.profileRef.key.toString()
         getImageData(key)
         binding.email.text = FBAuth.getEmail() //이메일 가져옴
         val profileName = binding.editName
         profileName.setText(FBAuth.getDisplayName())
         FBAuth.setDisplayName(profileName.text.toString())
-        val introduce = binding.editIntroduce.text.toString()
         binding.profileBtn.setOnClickListener {
+            val introduce = binding.editIntroduce.text.toString()
             if(isImageUpload){
-                //이미지 이름을 key값으로 저장
-                //val key = FBRef.profileRef.push().key.toString()
                 val storage = Firebase.storage
                 val storageRef = storage.reference //경로 설정
                 val mountainsRef = storageRef.child(key + ".png")
@@ -90,7 +88,8 @@ class ProfileEditActivity : AppCompatActivity() {
                         val downloadUri = task.result
                         val imuri = downloadUri.toString()
                         FBRef.profileRef
-                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),binding.editIntroduce.text.toString()))
+                            .child(ukey)
+                            .setValue(ProfileModel(imuri,FBAuth.getDisplayName(),introduce))
                     //파이어베이스에 저장
 
                     }

@@ -1,5 +1,6 @@
 package com.example.leaf
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import com.example.leaf.beauty.BeautywriteActivity
 import com.example.leaf.databinding.FragmentHomeBinding
 import com.bumptech.glide.Glide
@@ -15,6 +17,7 @@ import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.Utils.FollowList.FollowListActivity
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.auth.UserModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -29,12 +32,13 @@ import com.google.firebase.storage.ktx.storage
 import com.example.leaf.food.FoodwriteActivity
 import com.example.leaf.house.housewriteActivity
 import com.example.leaf.movie.MoviewriteActivity
+import com.example.leaf.movie.movieModel
 
 
 class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     lateinit var uid :String
-
+    private var proin : String = ""
     //프래그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +48,7 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         val profileName = binding.mainProfile
         val profileintroduce = binding.mainIntroduce
+        val uerid = FBAuth.getUid()
         val key = FBRef.profileRef.key.toString()
         val storageReference = Firebase.storage.reference.child(key + ".png")
         val imageViewFromFB = binding.profileImageview
@@ -68,6 +73,24 @@ class HomeFragment : Fragment() {
                     .into(imageViewFromFB)
         })
 
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    proin = dataModel?.introduce.toString()
+                    profileintroduce.setText(proin)
+                    Log.d("11",proin)
+
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        FBRef.profileRef.child(uerid).addValueEventListener(postListener)
+
+
         auth = Firebase.auth
         profileName.setText(FBAuth.getDisplayName()) //프로필 이름
         FBRef.profileRef.child("introduce").addValueEventListener(object : ValueEventListener {
@@ -87,7 +110,6 @@ class HomeFragment : Fragment() {
         var query = FBRef.userRef.child(uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 binding.homeFollowerCount.setText(snapshot.getValue(UserModel::class.java)!!.followerCount.toString())
                 binding.homeFollowingCount.setText(snapshot.getValue(UserModel::class.java)!!.followingCount.toString())
             }
@@ -97,6 +119,7 @@ class HomeFragment : Fragment() {
             }
 
         })
+
 
         binding.homeFollowerCount.setOnClickListener{
             val intent = Intent(activity, FollowListActivity::class.java)
@@ -113,6 +136,27 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    proin = dataModel?.introduce.toString()
+                    Log.d("11",proin)
+
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
+    }
+
+
 }
 
 
