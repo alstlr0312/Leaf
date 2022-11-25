@@ -49,15 +49,11 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-        val prView = item.get(position).prouri
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
-                /*Glide.with(context)
-                    .load(prView)
-                    .into(holder.image)*/
             }
 
         }
@@ -161,7 +157,6 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
         val star = itemView.findViewById<TextView>(R.id.star)
         var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
-        val profile = itemView.findViewById<ImageView>(R.id.iv_profile)
     }
 
     fun onClick(context: Context, position: Int) {
