@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : RecyclerView.Adapter<foodAdapter.Viewholder>() {
     private val foodKeyList = arrayListOf<String>()
     private val foodDataList = arrayListOf<foodModel>()
-
     private val TAG = FeedFragment::class.java.simpleName
 
     lateinit var auth: FirebaseAuth
@@ -49,31 +48,24 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-        //val prView = item.get(position).prouri
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
             }
-        }
-        /*CoroutineScope(Dispatchers.Main).launch {
-            holder.apply {
-                Glide.with(context)
-                    .load(prView)
-                    .into(holder.image)
-            }
-        }*/
-        holder.title.text = item.get(position).title
-        Log.d("check33", item.get(position).title)
-        holder.writer.text = item.get(position).uid
-        holder.date.text = item.get(position).date
-        holder.online.text = item.get(position).oneline
-        holder.star.text = item.get(position).star
 
-        holder.itemView.setOnClickListener {
-            onClick(context, position)
         }
+        holder.title.text=item.get(position).title
+        Log.d("check33", item.get(position).title)
+        holder.writer.text=item.get(position).uid
+        holder.date.text=item.get(position).date
+        holder.online.text=item.get(position).oneline
+        holder.star.text=item.get(position).star
+        holder.itemView.setOnClickListener{
+            onClick(context,position)
+        }
+
         var query = FBRef.userRef.child(item.get(position).uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -103,10 +95,12 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart_full)
                 Log.d("clickfav","click fav")
-                item.get(position).favoriteCount++
                 item.get(position).favorite.put(mydata.uid, true)
+                item.get(position).favoriteCount++
                 FBRef.foodRef.child(item.get(position).key).child("favorite")
                     .setValue( item.get(position).favorite)
+                FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
                 FBRef.foodRef.child(item.get(position).key).child("favoriteCount")
                     .setValue(item.get(position).favoriteCount)
             }
@@ -160,11 +154,9 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
-        val favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
+        var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
-        //val profile = itemView.findViewById<ImageView>(R.id.iv_profile)
     }
-
 
     fun onClick(context: Context, position: Int) {
         val intent = Intent(context, foodpostActivity::class.java)
@@ -192,6 +184,6 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         }
         FBRef.foodRef.addValueEventListener(postListener)
     }
-    
+
 }
 

@@ -13,7 +13,6 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityFoodwriteBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,8 +30,6 @@ class FoodwriteActivity : AppCompatActivity() {
 
     private var isImageUpload = false
 
-    private var prouri : String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -40,15 +37,22 @@ class FoodwriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
+            val ukey = FBAuth.getUid()
+            //val eid = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.foodratingBar.rating.toString()
             Log.d(TAG,title)
-            val key = FBRef.beautyRef.push().key.toString()
-            val uid = FBAuth.getUid()
 
+            //파이어 베이스 storge에 이미지를 저장
+            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
+            //이미지 이름을 key값으로 저장
+            val key = FBRef.foodRef.push().key.toString()
+
+            //board
+            //  -key
+            //      -boardModel(title, content, uid, time)
 
             if(isImageUpload) {
 
@@ -85,13 +89,13 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key))
                         Log.d("check", downloadUri.toString())
-                        Log.w(ContentValues.TAG, "등록완료")
                     }
                 }
 
             }
+            Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
@@ -104,24 +108,6 @@ class FoodwriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun getpro(key: String) {
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
-                    prouri = dataModel?.imUrl.toString()
-
-                } catch (e: Exception) {
-                    Log.w(ContentValues.TAG, "삭제완료")
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        FBRef.profileRef.child(key).addValueEventListener(postListener)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

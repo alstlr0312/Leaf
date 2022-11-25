@@ -39,13 +39,12 @@ class HouseEditActivity : AppCompatActivity() {
         getImageData(key)
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
+            val ukey = FBAuth.getUid()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
             val key = FBRef.beautyRef.push().key.toString()
-            val uid = FBAuth.getUid()
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -75,7 +74,7 @@ class HouseEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.houseRef
                             .child(key)
-                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key,uid))
+                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key))
                         Log.d("check", downloadUri.toString())
                     }
                 }
