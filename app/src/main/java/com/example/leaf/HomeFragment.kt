@@ -1,6 +1,5 @@
 package com.example.leaf
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.Utils.FollowList.FollowListActivity
-import com.example.leaf.Utils.MyPostList.MyPostListActivity
 import com.example.leaf.auth.MyHomeActivity
 import com.example.leaf.auth.UserModel
 import com.google.android.gms.tasks.OnCompleteListener
@@ -33,7 +31,6 @@ import com.example.leaf.house.housewriteActivity
 import com.example.leaf.movie.MoviewriteActivity
 
 
-
 class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     lateinit var uid :String
@@ -48,7 +45,7 @@ class HomeFragment : Fragment() {
         val profileName = binding.mainProfile
         val profileintroduce = binding.mainIntroduce
         val key = FBRef.profileRef.key.toString()
-        val storageReference = Firebase.storage.reference.child(FBAuth.getUid() + ".png")
+        val storageReference = Firebase.storage.reference.child(key + ".png")
         val imageViewFromFB = binding.profileImageview
         binding.foodplusBtn.setOnClickListener {
             startActivity(Intent(activity, FoodwriteActivity::class.java))
@@ -64,7 +61,6 @@ class HomeFragment : Fragment() {
         binding.houseplusBtn.setOnClickListener {
             startActivity(Intent(activity, housewriteActivity::class.java))
         }
-
         storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
             if (task.isSuccessful)
                 Glide.with(this)
@@ -91,6 +87,7 @@ class HomeFragment : Fragment() {
         var query = FBRef.userRef.child(uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 binding.homeFollowerCount.setText(snapshot.getValue(UserModel::class.java)!!.followerCount.toString())
                 binding.homeFollowingCount.setText(snapshot.getValue(UserModel::class.java)!!.followingCount.toString())
             }
@@ -114,30 +111,8 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.mainArrow.setOnClickListener{
-            val intent = Intent(activity, MyPostListActivity::class.java)
-            intent.putExtra("Kind", "Movie")
-            startActivity(intent)
-        }
-
-        binding.mainArrow2.setOnClickListener{
-            val intent = Intent(activity, MyPostListActivity::class.java)
-            intent.putExtra("Kind", "House")
-            startActivity(intent)
-        }
-
-        binding.mainArrow3.setOnClickListener{
-            val intent = Intent(activity, MyPostListActivity::class.java)
-            intent.putExtra("Kind", "Beauty")
-            startActivity(intent)
-        }
-        binding.mainArrow4.setOnClickListener{
-            val intent = Intent(activity, MyPostListActivity::class.java)
-            intent.putExtra("Kind", "Food")
-            startActivity(intent)
-        }
-
         return binding.root
     }
 }
+
 

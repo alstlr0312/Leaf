@@ -1,7 +1,6 @@
 package com.example.leaf.beauty
 
 import android.content.ContentValues
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
-import com.example.leaf.Utils.FavoriteList.FavoriteListActivity
-import com.example.leaf.Utils.FollowList.FollowListActivity
 import com.example.leaf.databinding.ActivityBeautypostAtivityBinding
 
 import com.google.firebase.database.DataSnapshot
@@ -39,10 +36,7 @@ class beautypostAtivity : AppCompatActivity() {
         binding.boardSettingIcon.setOnClickListener {
             showDialog()
         }
-        binding.heartrate.setOnClickListener {
-            //val intent = Intent(this, FavoriteListActivity::class.java)
-            //startActivity(intent)
-        }
+
         getBoardData(key)
         getImageData(key)
     }

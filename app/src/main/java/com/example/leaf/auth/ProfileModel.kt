@@ -5,7 +5,8 @@ import android.widget.EditText
 data class ProfileModel(
     val imUrl : String = "",
     val displayName: String = "",
-    var introduce: String = "",
-    val uid : String = ""
+    val introduce: String = "",
+
+
 )
 
