@@ -1,7 +1,6 @@
 package com.example.leaf.beauty
 
 import android.content.ContentValues
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +36,7 @@ class beautypostAtivity : AppCompatActivity() {
         binding.boardSettingIcon.setOnClickListener {
             showDialog()
         }
+
         getBoardData(key)
         getImageData(key)
     }
@@ -48,11 +48,11 @@ class beautypostAtivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
         val alertDialog = mBuilder.show()
-         alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
-             val intent = Intent(this,BeautyEditActivity::class.java)
+        /* alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
+             val intent = Intent(this,BoardEditActivity::class.java)
              intent.putExtra("key",key)
              startActivity(intent)
-         }
+         }*/
         alertDialog.findViewById<Button>(R.id.deletebtn)?.setOnClickListener{
             FBRef.beautyRef.child(key).removeValue()
             finish()
@@ -60,6 +60,7 @@ class beautypostAtivity : AppCompatActivity() {
     }
 
     private fun getImageData(key: String) {
+        // Reference to an image file in Cloud Storage
         val storageReference = Firebase.storage.reference.child(key + ".png")
 
         // ImageView in your Activity
