@@ -38,21 +38,12 @@ class FoodwriteActivity : AppCompatActivity() {
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
             val ukey = FBAuth.getUid()
-            //val eid = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.foodratingBar.rating.toString()
-            Log.d(TAG,title)
-
-            //파이어 베이스 storge에 이미지를 저장
-            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
-            //이미지 이름을 key값으로 저장
             val key = FBRef.foodRef.push().key.toString()
-
-            //board
-            //  -key
-            //      -boardModel(title, content, uid, time)
+            val Uname = FBAuth.getDisplayName()
 
             if(isImageUpload) {
 
@@ -89,7 +80,7 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,Uname))
                         Log.d("check", downloadUri.toString())
                     }
                 }
