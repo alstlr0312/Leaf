@@ -55,9 +55,9 @@ class beautyAdapter(val item : ArrayList<beautyModel>, var mydata : UserModel) :
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
-                Glide.with(context)
+                /*Glide.with(context)
                     .load(prView)
-                    .into(holder.image)
+                    .into(holder.image)*/
             }
 
         }

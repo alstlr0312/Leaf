@@ -64,6 +64,7 @@ class beautypostAtivity : AppCompatActivity() {
 
         // ImageView in your Activity
         val imageViewFromFB = binding.ivPostProfile
+        //val imageViewFromFB2 = binding.imageView6
         CoroutineScope(Dispatchers.Main).launch {
             storageReference.downloadUrl.addOnCompleteListener { task ->
                 if (task.isSuccessful) {

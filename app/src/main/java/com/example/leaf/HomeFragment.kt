@@ -47,8 +47,6 @@ class HomeFragment : Fragment() {
     ): FrameLayout {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         val profileName = binding.mainProfile
-        val profileintroduce = binding.mainIntroduce
-        val key = FBAuth.getUid()//FBRef.profileRef.key.toString()
         val storageReference = Firebase.storage.reference.child(FBAuth.getUid() + ".png")
         val imageViewFromFB = binding.profileImageview
         binding.foodplusBtn.setOnClickListener {
