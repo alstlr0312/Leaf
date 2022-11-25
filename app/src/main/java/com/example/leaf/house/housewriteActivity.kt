@@ -32,23 +32,14 @@ class housewriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getUid()
-            // val eid = FBAuth.getDisplayName()
+            val ukey = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.houseratingBar.rating.toString()
             Log.d(TAG,title)
-
-            //파이어 베이스 storge에 이미지를 저장
-            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
-            //이미지 이름을 key값으로 저장
-            val key = FBRef.houseRef.push().key.toString()
-
-            //board
-            //  -key
-            //      -boardModel(title, content, uid, time)
-
+            val key = FBRef.beautyRef.push().key.toString()
+            val uid = FBAuth.getUid()
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -65,11 +56,7 @@ class housewriteActivity : AppCompatActivity() {
 
                 var uploadTask = mountainsRef.putBytes(data)
                 uploadTask.addOnFailureListener {
-                    // Handle unsuccessful uploads
-                }.addOnSuccessListener { taskSnapshot ->
-                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                    // ...
-                }
+                }.addOnSuccessListener { taskSnapshot -> }
 
                 val urlTask = uploadTask.continueWithTask { task->
                     if (!task.isSuccessful){
@@ -84,16 +71,12 @@ class housewriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.houseRef
                             .child(key)
-                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star))
+                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }
 
             }
-            /*FBRef.boardRef
-                .child(key)
-                .setValue(BoardModel(title,eid,ukey,dogname,breed,lostday,content,time))*/
-
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)

@@ -1,6 +1,7 @@
 package com.example.leaf.movie
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -48,11 +49,11 @@ class moviepostActivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
         val alertDialog = mBuilder.show()
-        /* alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
-             val intent = Intent(this,BoardEditActivity::class.java)
+         alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
+             val intent = Intent(this,MovieEditActivity::class.java)
              intent.putExtra("key",key)
              startActivity(intent)
-         }*/
+         }
         alertDialog.findViewById<Button>(R.id.deletebtn)?.setOnClickListener{
             FBRef.movieRef.child(key).removeValue()
             finish()

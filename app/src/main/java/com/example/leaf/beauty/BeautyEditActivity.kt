@@ -1,4 +1,4 @@
-package com.example.leaf.food
+package com.example.leaf.beauty
 
 import android.content.ContentValues
 import android.content.Intent
@@ -9,47 +9,44 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
-import com.example.leaf.databinding.ActivityFoodwriteBinding
+import com.example.leaf.databinding.ActivityBeautyEditBinding
+import com.example.leaf.movie.movieModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
-class FoodwriteActivity : AppCompatActivity() {
+class BeautyEditActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityFoodwriteBinding
-
-    private val TAG = FoodwriteActivity::class.java.simpleName
-
+    private lateinit var key: String
+    private lateinit var binding: ActivityBeautyEditBinding
     private var isImageUpload = false
 
-    private var prouri : String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_foodwrite)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_beauty_edit)
 
+        key = intent.getStringExtra("key").toString()
+        getBoardData(key)
+        getImageData(key)
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
             val ukey = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
-            val star = binding.foodratingBar.rating.toString()
-            Log.d(TAG,title)
+            val star = binding.beautyratingBar.rating.toString()
             val key = FBRef.beautyRef.push().key.toString()
             val uid = FBAuth.getUid()
-
-
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -65,13 +62,7 @@ class FoodwriteActivity : AppCompatActivity() {
                 val data = baos.toByteArray()
 
                 var uploadTask = mountainsRef.putBytes(data)
-                uploadTask.addOnFailureListener {
-                    // Handle unsuccessful uploads
-                }.addOnSuccessListener { taskSnapshot ->
-                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                    // ...
-                }
-
+                uploadTask.addOnFailureListener {}.addOnSuccessListener { taskSnapshot -> }
                 val urlTask = uploadTask.continueWithTask { task->
                     if (!task.isSuccessful){
                         task.exception?.let{
@@ -83,14 +74,12 @@ class FoodwriteActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         val downloadUri = task.result
                         val imuri = downloadUri.toString()
-                        FBRef.foodRef
+                        FBRef.beautyRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid,prouri))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,uid))
                         Log.d("check", downloadUri.toString())
-                        Log.w(ContentValues.TAG, "등록완료")
                     }
                 }
-
             }
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
@@ -104,29 +93,55 @@ class FoodwriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun getpro(key: String) {
+    private fun getBoardData(key: String){
+
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
-                    prouri = dataModel?.imUrl.toString()
 
-                } catch (e: Exception) {
+                try {
+                    val dataModel = dataSnapshot.getValue(beautyModel::class.java)
+                    Log.d(ContentValues.TAG, dataSnapshot.toString())
+
+                    binding.writeTitle.setText(dataModel?.title)
+                    binding.writeContents.setText(dataModel?.oneline)
+                    binding.writeEdit.setText(dataModel?.board)
+
+                }catch (e: Exception){
                     Log.w(ContentValues.TAG, "삭제완료")
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        FBRef.profileRef.child(key).addValueEventListener(postListener)
+        FBRef.beautyRef.child(key).addValueEventListener(postListener)
     }
 
+    private fun getImageData(key: String){
+        // Reference to an image file in Cloud Storage
+        val storageReference = Firebase.storage.reference.child("$key.png")
+
+        // ImageView in your Activity
+        val imageViewFromFB = binding.writeCamera
+
+        storageReference.downloadUrl.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Glide.with(this)
+                    .load(task.result)
+                    .into(imageViewFromFB)
+            } else {
+
+            }
+        }
+
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){
             binding.writeCamera.setImageURI(data?.data)
         }
     }
+
 }
+
+
