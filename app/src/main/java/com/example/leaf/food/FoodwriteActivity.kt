@@ -85,7 +85,7 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid,prouri))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid))
                         Log.d("check", downloadUri.toString())
                         Log.w(ContentValues.TAG, "등록완료")
                     }

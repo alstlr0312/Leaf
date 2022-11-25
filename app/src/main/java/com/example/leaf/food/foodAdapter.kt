@@ -49,7 +49,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-        val prView = item.get(position).prouri
+        //val prView = item.get(position).prouri
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
@@ -57,13 +57,13 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
                     .into(holder.image)
             }
         }
-        CoroutineScope(Dispatchers.Main).launch {
+        /*CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(prView)
                     .into(holder.image)
             }
-        }
+        }*/
         holder.title.text = item.get(position).title
         Log.d("check33", item.get(position).title)
         holder.writer.text = item.get(position).uid
@@ -162,7 +162,7 @@ class foodAdapter(val item : ArrayList<foodModel>, var mydata : UserModel) : Rec
         val star = itemView.findViewById<TextView>(R.id.star)
         val favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
-        val profile = itemView.findViewById<ImageView>(R.id.iv_profile)
+        //val profile = itemView.findViewById<ImageView>(R.id.iv_profile)
     }
 
 
