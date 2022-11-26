@@ -1,6 +1,7 @@
 package com.example.leaf.feed
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.UserModel
@@ -54,6 +56,10 @@ class FeedFragment : Fragment() {
         getMyData()
 
         binding.moBtn.setOnClickListener {
+            binding.moBtn.background = resources.getDrawable(R.drawable.background_feed_btn_click)
+            binding.beBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.foBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.hoBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
             binding.rvPostList.apply {
                 getmovieData()
                 layoutManager = GridLayoutManager(requireContext(),1)
@@ -66,6 +72,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.foBtn.setOnClickListener {
+            binding.foBtn.background = resources.getDrawable(R.drawable.background_feed_btn_click)
+            binding.beBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.moBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.hoBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
             binding.rvPostList.apply {
                 getfoodData()
                 layoutManager = GridLayoutManager(requireContext(),1)
@@ -78,6 +88,10 @@ class FeedFragment : Fragment() {
         }
         //미용 피드를 클릭했을 때
         binding.beBtn.setOnClickListener {
+            binding.beBtn.background = resources.getDrawable(R.drawable.background_feed_btn_click)
+            binding.moBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.foBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.hoBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
             binding.rvPostList.apply {
                 getbeautyData()
                 layoutManager = GridLayoutManager(requireContext(),1)
@@ -90,6 +104,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.hoBtn.setOnClickListener {
+            binding.hoBtn.background = resources.getDrawable(R.drawable.background_feed_btn_click)
+            binding.moBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.foBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
+            binding.beBtn.background = resources.getDrawable(R.drawable.background_feed_btn)
             binding.rvPostList.apply {
                 gethouseData()
                 layoutManager = GridLayoutManager(requireContext(),1)

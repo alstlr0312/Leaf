@@ -19,7 +19,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="360dp"
-            android:layout_height="160dp"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="true"
@@ -41,7 +41,7 @@
 
                 <TextView
                     android:id="@+id/rv_writer"
-                    android:layout_width="51dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -53,8 +53,8 @@
 
                 <TextView
                     android:id="@+id/rv_date"
-                    android:layout_width="77dp"
-                    android:layout_height="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="9999/99/99"
                     android:textColor="#ABABAF"
@@ -76,7 +76,8 @@
                     android:id="@+id/re_title"
                     android:layout_width="339dp"
                     android:layout_height="24dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:text="제목입니당"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,11 +89,11 @@
                     android:layout_width="63dp"
                     android:layout_height="64dp"
                     android:layout_marginEnd="276dp"
+                    android:scaleType="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/re_title"
-                    android:scaleType="center"
                     app:srcCompat="@android:drawable/ic_menu_gallery" />
 
                 <TextView
@@ -111,6 +112,7 @@
                     android:layout_width="29dp"
                     android:layout_height="33dp"
                     android:layout_marginTop="28dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/re_title"
                     app:srcCompat="@drawable/heart" />
@@ -118,22 +120,24 @@
                 <Button
                     android:id="@+id/rv_follow"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="123dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
-                    android:text="UNFollow"
+                    android:padding="7dp"
+                    android:text="UNFOLLOW"
+                    android:textAlignment="center"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/re_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/rv_date"
-                    app:layout_constraintTop_toTopOf="@+id/rv_writer"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
                     android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/item_Heart"
@@ -141,12 +145,13 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="5dp"
                     app:layout_constraintBottom_toBottomOf="@+id/star"
                     app:layout_constraintEnd_toStartOf="@+id/star"
                     app:layout_constraintTop_toTopOf="@+id/star"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
+                    app:srcCompat="@drawable/star" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

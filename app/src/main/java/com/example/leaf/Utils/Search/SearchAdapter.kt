@@ -97,7 +97,7 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
         }
         else{
             holder.followBtn.text = "FOLLOW"
-            holder.followBtn.setBackgroundColor(Color.BLUE)
+            holder.followBtn.setBackgroundColor(Color.parseColor("#6495ED"))
             holder.followBtn.setTextColor(Color.WHITE)
             holder.followBtn.setOnClickListener{
                 item.get(position).followers.put(uid, true)

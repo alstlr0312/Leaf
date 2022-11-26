@@ -24,8 +24,9 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="Feed"
+                android:textColor="@color/main_color"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,10 +38,12 @@
                 android:id="@+id/moBtn"
                 android:layout_width="76dp"
                 android:layout_height="34dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/background_feed_btn"
+                android:paddingTop="7dp"
                 android:text="영화"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +56,9 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/background_feed_btn"
+                android:paddingTop="7dp"
                 android:text="숙소"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/moBtn"
@@ -67,7 +72,9 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/background_feed_btn"
+                android:paddingTop="7dp"
                 android:text="미용"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/hoBtn"
@@ -82,7 +89,9 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/background_feed_btn"
+                android:paddingTop="7dp"
                 android:text="맛집"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/beBtn"
@@ -91,18 +100,17 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_postList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginBottom="1dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/moBtn"
-                        >
+                android:id="@+id/rv_postList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/moBtn">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
