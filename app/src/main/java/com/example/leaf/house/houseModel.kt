@@ -9,6 +9,7 @@ class houseModel  (
     val imUrl : String = "",
     val star : String = "",
     val key : String ="",
+    val uerkey : String ="",
     val favorite :MutableMap<String,Boolean> = HashMap(),
     var favoriteCount : Int = 0
 )

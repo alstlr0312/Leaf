@@ -50,11 +50,11 @@ class foodpostActivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
         val alertDialog = mBuilder.show()
-       /* alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
-            val intent = Intent(this,BoardEditActivity::class.java)
+        alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
+            val intent = Intent(this,FoodEditActivity::class.java)
             intent.putExtra("key",key)
             startActivity(intent)
-        }*/
+        }
         alertDialog.findViewById<Button>(R.id.deletebtn)?.setOnClickListener{
             FBRef.foodRef.child(key).removeValue()
             finish()

@@ -32,18 +32,14 @@ class BeautywriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getUid()
-            //val eid = FBAuth.getDisplayName()
+            val ukey = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
             Log.d(TAG,title)
-
-            //파이어 베이스 storge에 이미지를 저장
-            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
-            //이미지 이름을 key값으로 저장
             val key = FBRef.beautyRef.push().key.toString()
+            val uid = FBAuth.getUid()
 
             //board
             //  -key
@@ -84,7 +80,7 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,uid))
                         Log.d("check", downloadUri.toString())
                     }
                 }

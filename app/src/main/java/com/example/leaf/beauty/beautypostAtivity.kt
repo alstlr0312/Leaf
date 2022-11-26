@@ -14,8 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
-import com.example.leaf.Utils.FavoriteList.FavoriteListActivity
-import com.example.leaf.Utils.FollowList.FollowListActivity
 import com.example.leaf.databinding.ActivityBeautypostAtivityBinding
 
 import com.google.firebase.database.DataSnapshot
@@ -39,10 +37,6 @@ class beautypostAtivity : AppCompatActivity() {
         binding.boardSettingIcon.setOnClickListener {
             showDialog()
         }
-        binding.heartrate.setOnClickListener {
-            //val intent = Intent(this, FavoriteListActivity::class.java)
-            //startActivity(intent)
-        }
         getBoardData(key)
         getImageData(key)
     }
@@ -54,11 +48,11 @@ class beautypostAtivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
         val alertDialog = mBuilder.show()
-        /* alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
-             val intent = Intent(this,BoardEditActivity::class.java)
+         alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
+             val intent = Intent(this,BeautyEditActivity::class.java)
              intent.putExtra("key",key)
              startActivity(intent)
-         }*/
+         }
         alertDialog.findViewById<Button>(R.id.deletebtn)?.setOnClickListener{
             FBRef.beautyRef.child(key).removeValue()
             finish()
@@ -66,7 +60,6 @@ class beautypostAtivity : AppCompatActivity() {
     }
 
     private fun getImageData(key: String) {
-        // Reference to an image file in Cloud Storage
         val storageReference = Firebase.storage.reference.child(key + ".png")
 
         // ImageView in your Activity
