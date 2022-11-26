@@ -32,9 +32,9 @@ import com.example.leaf.movie.MoviewriteActivity
 
 
 class HomeFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
-    lateinit var uid :String
-
+    lateinit var auth: FirebaseAuth
+    lateinit var uid: String
+    lateinit var mydata : UserModel
     //프래그먼트와 레이아웃을 연결시켜주는 부분
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,9 +42,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): FrameLayout {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val profileName = binding.mainProfile
-        val profileintroduce = binding.mainIntroduce
+        //val profileName = binding.mainProfile
         val key = FBRef.profileRef.key.toString()
+
         val storageReference = Firebase.storage.reference.child(key + ".png")
         val imageViewFromFB = binding.profileImageview
         binding.foodplusBtn.setOnClickListener {
@@ -61,16 +61,28 @@ class HomeFragment : Fragment() {
         binding.houseplusBtn.setOnClickListener {
             startActivity(Intent(activity, housewriteActivity::class.java))
         }
-        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
+        /*storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
             if (task.isSuccessful)
                 Glide.with(this)
                     .load(task.result)
                     .into(imageViewFromFB)
-        })
+        })*/
 
-        auth = Firebase.auth
-        profileName.setText(FBAuth.getDisplayName()) //프로필 이름
-        FBRef.profileRef.child("introduce").addValueEventListener(object : ValueEventListener {
+        auth = FirebaseAuth.getInstance()
+        uid = auth.currentUser?.uid.toString()
+        var imguri = FBRef.userRef.child("$uid/displayName").addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.getValue<String>()
+                Log.d(ContentValues.TAG, "Value is: $value")
+                binding.mainProfile.setText(value)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+        //profileName.setText(FBAuth.getDisplayName()) //프로필 이름
+        FBRef.userRef.child("$uid/description").addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.getValue<String>()
@@ -82,8 +94,6 @@ class HomeFragment : Fragment() {
 
             }
         })
-
-        uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var query = FBRef.userRef.child(uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
