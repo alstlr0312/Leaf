@@ -4,6 +4,7 @@ data class UserModel (
     val password : String = "",
     val email : String = "",
     val displayName : String = "",
+    val imUrl : String? =null,
     val description : String = "",
     var followerCount : Int = 0,
     //중복을 방지하기 위해서
@@ -12,5 +13,5 @@ data class UserModel (
     var followingCount : Int = 0,
     //중복 방지
     var followings : MutableMap<String,Boolean> = HashMap(),
-    val imUrl : String? =null
+
 )

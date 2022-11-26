@@ -77,23 +77,6 @@ class settingFragment : Fragment() {
             val photo = view?.findViewById<ImageView>(R.id.profile_imageview)
             photo?.setImageURI(imageUri) //이미지 뷰를 바꿈
             //기존 사진을 삭제 후 새로운 사진을 등록
-                FirebaseStorage.getInstance()
-                    .reference.child("$uid/photo").putFile(imageUri!!).addOnSuccessListener {
-                        var userProfile: Uri? = null
-                        FirebaseStorage.getInstance().reference.child("$uid/photo").downloadUrl
-                            .addOnSuccessListener {
-                                val photoUri: Uri = it
-                                println("$photoUri")
-                                FBRef.userRef.child("$uid/imUrl").setValue(photoUri.toString())
-                                Toast.makeText(
-                                    requireContext(),
-                                    "프로필사진이 변경되었습니다.",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-                    }
-            } else {
                 fireStorage.child("$uid/photo").delete().addOnSuccessListener {
                     fireStorage.child("$uid/photo").putFile(imageUri!!).addOnSuccessListener {
                         fireStorage.child("$uid/photo").downloadUrl.addOnSuccessListener {
@@ -106,7 +89,9 @@ class settingFragment : Fragment() {
                     }
                 }
                 Log.d("이미지", "성공")
-            }
+            }else {
+
+                }
         }
 
     }
