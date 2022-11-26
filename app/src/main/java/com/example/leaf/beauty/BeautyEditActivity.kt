@@ -1,6 +1,7 @@
 package com.example.leaf.beauty
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,6 +15,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityBeautyEditBinding
 import com.example.leaf.movie.movieModel
 import com.google.firebase.database.DataSnapshot
@@ -30,7 +32,7 @@ class BeautyEditActivity : AppCompatActivity() {
     private lateinit var key: String
     private lateinit var binding: ActivityBeautyEditBinding
     private var isImageUpload = false
-
+    private var prouri : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_beauty_edit)
@@ -46,6 +48,8 @@ class BeautyEditActivity : AppCompatActivity() {
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
             val key = FBRef.beautyRef.push().key.toString()
+            val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -75,7 +79,7 @@ class BeautyEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
@@ -91,7 +95,22 @@ class BeautyEditActivity : AppCompatActivity() {
             isImageUpload = true
         }
     }
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
+    }
     private fun getBoardData(key: String){
 
         val postListener = object : ValueEventListener {

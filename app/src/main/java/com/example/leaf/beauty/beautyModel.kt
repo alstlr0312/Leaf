@@ -9,7 +9,7 @@ class beautyModel (
     val imUrl : String = "",
     val star : String = "",
     val key : String ="",
-    val Uname : String = "",
+    val uname : String = "",
     val proUrl : String = "",
     var favorite :MutableMap<String,Boolean> = HashMap(),
     var favoriteCount : Int = 0

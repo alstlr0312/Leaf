@@ -1,6 +1,7 @@
 package com.example.leaf.house
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,6 +15,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityHouseEditBinding
 import com.example.leaf.databinding.ActivityMovieEditBinding
 import com.example.leaf.movie.movieModel
@@ -29,7 +31,7 @@ class HouseEditActivity : AppCompatActivity() {
     private lateinit var key: String
     private lateinit var binding: ActivityHouseEditBinding
     private var isImageUpload = false
-
+    private var prouri : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_house_edit)
@@ -45,6 +47,8 @@ class HouseEditActivity : AppCompatActivity() {
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
             val key = FBRef.beautyRef.push().key.toString()
+            val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -74,7 +78,7 @@ class HouseEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.houseRef
                             .child(key)
-                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
@@ -90,7 +94,22 @@ class HouseEditActivity : AppCompatActivity() {
             isImageUpload = true
         }
     }
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
+    }
     private fun getBoardData(key: String){
 
         val postListener = object : ValueEventListener {

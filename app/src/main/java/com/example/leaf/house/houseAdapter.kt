@@ -48,17 +48,24 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
+        val proView = item.get(position).proUrl
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
-            }
 
+            }
+            holder.apply {
+                Glide.with(context)
+                    .load(proView)
+                    .into(holder.profile)
+
+            }
         }
         holder.title.text=item.get(position).title
         Log.d("check33", item.get(position).title)
-        holder.writer.text=item.get(position).Uname
+        holder.writer.text=item.get(position).uname
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star
@@ -156,6 +163,7 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         val star = itemView.findViewById<TextView>(R.id.star)
         var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
+        val profile = itemView.findViewById<ImageView>(R.id.imageView5)
     }
 
     fun onClick(context: Context, position: Int) {

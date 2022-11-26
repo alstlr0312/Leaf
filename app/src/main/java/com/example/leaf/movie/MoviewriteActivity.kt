@@ -1,5 +1,6 @@
 package com.example.leaf.movie
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -12,7 +13,11 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityMoviewriteBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -23,7 +28,7 @@ class MoviewriteActivity : AppCompatActivity() {
     private val TAG =MoviewriteActivity::class.java.simpleName
 
     private var isImageUpload = false
-
+    private var prouri : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -38,6 +43,7 @@ class MoviewriteActivity : AppCompatActivity() {
             val star = binding.movieratingBar.rating.toString()
             val key = FBRef.movieRef.push().key.toString()
             val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
 
             if(isImageUpload) {
 
@@ -74,7 +80,7 @@ class MoviewriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.movieRef
                             .child(key)
-                            .setValue(movieModel(title,ukey,oneline,board,time,imuri,star,key,Uname))
+                            .setValue(movieModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
@@ -93,7 +99,22 @@ class MoviewriteActivity : AppCompatActivity() {
         }
     }
 
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.profileRef.child(key).addValueEventListener(postListener)
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){
