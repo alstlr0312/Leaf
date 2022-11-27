@@ -2,8 +2,6 @@ package com.example.leaf.setting
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -26,13 +23,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
-import com.example.leaf.Utils.FBRef.profileRef
-import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
 import com.example.leaf.auth.UserModel
-import com.example.leaf.databinding.FragmentHomeBinding
-import com.example.leaf.databinding.FragmentSettingBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -41,12 +32,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 
 class settingFragment : Fragment() {
 

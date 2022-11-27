@@ -36,7 +36,6 @@ class JoinActivity : AppCompatActivity() {
                 imageUri = result.data?.data //이미지 경로 원본
                 photo.setImageURI(imageUri) //이미지 뷰를 바꿈
                 Log.d("이미지", "성공")
-
             }
             else{
                 Log.d("이미지", "실패")

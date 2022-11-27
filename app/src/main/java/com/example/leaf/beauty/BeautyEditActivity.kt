@@ -15,13 +15,11 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
+import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.ActivityBeautyEditBinding
-import com.example.leaf.movie.movieModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -99,7 +97,7 @@ class BeautyEditActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    val dataModel = dataSnapshot.getValue(UserModel::class.java)
                     prouri = dataModel?.imUrl.toString()
 
                 } catch (e: Exception) {
@@ -109,7 +107,7 @@ class BeautyEditActivity : AppCompatActivity() {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        FBRef.profileRef.child(key).addValueEventListener(postListener)
+        FBRef.userRef.child(key).addValueEventListener(postListener)
     }
     private fun getBoardData(key: String){
 
@@ -118,8 +116,6 @@ class BeautyEditActivity : AppCompatActivity() {
 
                 try {
                     val dataModel = dataSnapshot.getValue(beautyModel::class.java)
-                    Log.d(ContentValues.TAG, dataSnapshot.toString())
-
                     binding.writeTitle.setText(dataModel?.title)
                     binding.writeContents.setText(dataModel?.oneline)
                     binding.writeEdit.setText(dataModel?.board)

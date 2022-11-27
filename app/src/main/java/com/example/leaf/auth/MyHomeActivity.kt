@@ -33,10 +33,7 @@ class MyHomeActivity : AppCompatActivity() {
             }
             true
         }
-        binding.mainEditbtn.setOnClickListener {
-            val intent = Intent(this, ProfileEditActivity::class.java)
-            startActivity(intent)
-        }
+
         binding.mainGlass.setOnClickListener{
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)

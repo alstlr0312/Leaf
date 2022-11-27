@@ -67,15 +67,7 @@ class HomeFragment : Fragment() {
             startActivity(Intent(activity, housewriteActivity::class.java))
         }
 
-       /* storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
-            if (task.isSuccessful)
-                Glide.with(this)
-                    .load(task.result)
-                    .into(imageViewFromFB)
-        })*/
 
-       // auth = FirebaseAuth.getInstance()
-      //  uid = auth.currentUser?.uid.toString()
         var imguri = FBRef.userRef.child("$uid/displayName").addValueEventListener(object :ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.getValue<String>()

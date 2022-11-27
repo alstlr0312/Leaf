@@ -13,7 +13,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
+import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.ActivityHousewriteBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -102,7 +102,7 @@ class housewriteActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                    val dataModel = dataSnapshot.getValue(UserModel::class.java)
                     prouri = dataModel?.imUrl.toString()
 
                 } catch (e: Exception) {
@@ -112,7 +112,7 @@ class housewriteActivity : AppCompatActivity() {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        FBRef.profileRef.child(key).addValueEventListener(postListener)
+        FBRef.userRef.child(key).addValueEventListener(postListener)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
