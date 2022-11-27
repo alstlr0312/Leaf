@@ -122,12 +122,13 @@ class settingFragment : Fragment() {
             if(introduce?.text!!.isNotEmpty()){
                 FBRef.userRef.child("$uid/description").setValue(introduce.text.toString())
                 introduce.clearFocus()
+                Toast.makeText(requireContext(), "프로필 수정완료.", Toast.LENGTH_SHORT).show()
             }
             //이름 변경
             if(name?.text!!.isNotEmpty()) {
                 FBRef.userRef.child("$uid/displayName").setValue(name.text.toString())
                 name.clearFocus()
-                Toast.makeText(requireContext(), "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "프로필 수정완료.", Toast.LENGTH_SHORT).show()
             }
         }
 

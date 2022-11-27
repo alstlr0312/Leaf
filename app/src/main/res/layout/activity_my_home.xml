@@ -40,17 +40,8 @@
             android:id="@+id/main_glass"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="52dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/glass"
-            app:layout_constraintEnd_toEndOf="@+id/main_topBar"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/main_heart"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/heart_full"
             app:layout_constraintEnd_toEndOf="@+id/main_topBar"
             app:layout_constraintTop_toTopOf="parent" />
 
