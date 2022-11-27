@@ -13,7 +13,6 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
 import com.example.leaf.databinding.ActivityFoodwriteBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -108,8 +107,8 @@ class FoodwriteActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
-                    prouri = dataModel?.imUrl.toString()
+                   // val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
+                   // prouri = dataModel?.imUrl.toString()
 
                 } catch (e: Exception) {
                     Log.w(ContentValues.TAG, "삭제완료")

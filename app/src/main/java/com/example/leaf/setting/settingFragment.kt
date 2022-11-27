@@ -28,7 +28,6 @@ import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.Utils.FBRef.profileRef
 import com.example.leaf.auth.MyHomeActivity
-import com.example.leaf.auth.ProfileModel
 import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.FragmentHomeBinding
 import com.example.leaf.databinding.FragmentSettingBinding
