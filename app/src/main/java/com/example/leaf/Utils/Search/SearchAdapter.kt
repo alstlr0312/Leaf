@@ -1,5 +1,6 @@
 package com.example.leaf.Utils.Search
 
+import android.app.PendingIntent.getActivity
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,13 +10,19 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.leaf.R
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.UserModel
+import com.example.leaf.setting.settingFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<SearchAdapter.Viewholder>() {
     private val userKeyList = arrayListOf<String>()
@@ -24,6 +31,8 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
     lateinit var uid: String
     lateinit var mydata : UserModel
     private val TAG = SearchActivity::class.java.simpleName
+    private var friend : UserModel? = null
+    private val user = Firebase.auth.currentUser
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_item_list,parent,false)
@@ -47,6 +56,7 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
                 Log.d("mycheckdescription",mydata.description)
                 Log.d("mycheckfollower",mydata.followers.toString())
                 Log.d("mycheckfollowing",mydata.followings.toString())
+                Log.d("mycheckuserimage",mydata.imUrl.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -56,8 +66,8 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
         })
         //getData()
         val context = holder.itemView.context
-        //val imView = item.get(position).이미지
-        //Log.d("checkim",item.get(position).이미지)
+        val imView = item.get(position).imUrl
+        Log.d("checkim",item.get(position).imUrl.toString())
         Log.d("checkuid",item.get(position).uid)
         Log.d("checkemail",item.get(position).email)
         Log.d("checkdisplayName",item.get(position).displayName)
@@ -65,14 +75,10 @@ class SearchAdapter (val item : ArrayList<UserModel>) : RecyclerView.Adapter<Sea
         Log.d("checkfollower",item.get(position).followers.toString())
         Log.d("checkfollowing",item.get(position).followings.toString())
 
-
-        /*CoroutineScope(Dispatchers.Main).launch {
-            holder.apply {
-                Glide.with(context)
-                    .load(imView)
-                    .into(holder.image)
-            }
-        }*/
+        Glide.with(holder.itemView.context)
+            .load(imView)
+            .apply(RequestOptions().circleCrop())
+            .into(holder.image)
         holder.nickname.text=item.get(position).displayName
         holder.email.text=item.get(position).email
         holder.description.text = item.get(position).description
