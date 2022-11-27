@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toTopOf="@+id/main_movie"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
 
                 <TextView
                     android:id="@+id/main_introduce"
-                    android:layout_width="97dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="26dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
@@ -103,16 +103,17 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:id="@+id/main_movie"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
             android:layout_marginLeft="35dp"
+            android:layout_marginTop="220dp"
             android:text="영화"
-            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,14 +154,14 @@
 
         <TextView
             android:id="@+id/main_home"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
             android:text="숙소"
-            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_movie" />
 
@@ -197,16 +198,17 @@
             android:background="#999999">
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/main_beauty"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
             android:text="미용"
-            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_home" />
 
@@ -241,16 +243,17 @@
             android:background="#999999">
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/main_delicious"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
             android:text="맛집"
-            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_beauty" />
 

@@ -103,7 +103,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:background="@drawable/bottom_button"
+                android:padding="7dp"
                 android:text="리뷰 작성 완료"
+                android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 tools:ignore="TouchTargetSizeCheck" />
