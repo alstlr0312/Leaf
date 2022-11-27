@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.Utils.FollowList.FollowListActivity
+import com.example.leaf.Utils.MyPostList.MyPostListActivity
 import com.example.leaf.auth.MyHomeActivity
 import com.example.leaf.auth.UserModel
 import com.google.android.gms.tasks.OnCompleteListener
@@ -129,6 +130,28 @@ class HomeFragment : Fragment() {
         binding.homeFollowingCount.setOnClickListener{
             val intent = Intent(activity, FollowListActivity::class.java)
             intent.putExtra("Kind", "Following")
+            startActivity(intent)
+        }
+        binding.mainArrow.setOnClickListener{
+            val intent = Intent(activity, MyPostListActivity::class.java)
+            intent.putExtra("Kind", "Movie")
+            startActivity(intent)
+        }
+
+        binding.mainArrow2.setOnClickListener{
+            val intent = Intent(activity, MyPostListActivity::class.java)
+            intent.putExtra("Kind", "House")
+            startActivity(intent)
+        }
+
+        binding.mainArrow3.setOnClickListener{
+            val intent = Intent(activity, MyPostListActivity::class.java)
+            intent.putExtra("Kind", "Beauty")
+            startActivity(intent)
+        }
+        binding.mainArrow4.setOnClickListener{
+            val intent = Intent(activity, MyPostListActivity::class.java)
+            intent.putExtra("Kind", "Food")
             startActivity(intent)
         }
 
