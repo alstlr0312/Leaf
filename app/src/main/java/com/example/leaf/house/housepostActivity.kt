@@ -87,7 +87,7 @@ class housepostActivity : AppCompatActivity() {
                     val dataModel = dataSnapshot.getValue(houseModel::class.java)
                     Log.d(ContentValues.TAG, dataSnapshot.toString())
                     binding.postTitle.text = dataModel?.title
-                    binding.postName.text = dataModel?.uid
+                    binding.postName.text = dataModel?.uname
                     binding.postDate.text = dataModel?.date
                     binding.starrate.text = dataModel?.star
                     binding.postText1.text = dataModel?.oneline
