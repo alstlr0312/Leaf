@@ -43,23 +43,21 @@
                     android:id="@+id/rv_writer"
                     android:layout_width="wrap_content"
                     android:layout_height="21dp"
-                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:text="홍길동"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/rv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
                     android:text="9999/99/99"
                     android:textColor="#ABABAF"
                     android:textSize="10sp"
-                    app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toBottomOf="@+id/rv_writer" />
 
                 <de.hdodenhof.circleimageview.CircleImageView

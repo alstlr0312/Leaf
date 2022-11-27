@@ -86,7 +86,6 @@ class JoinActivity : AppCompatActivity() {
                                                 .show()
                                         }
                                 }
-                            //
                             FBAuth.setDisplayName(nickname) // displayName의 값을 nickname으로 변경
                             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, MyHomeActivity::class.java)
