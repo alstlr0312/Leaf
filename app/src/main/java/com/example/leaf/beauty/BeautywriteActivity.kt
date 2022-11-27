@@ -1,5 +1,6 @@
 package com.example.leaf.beauty
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -12,7 +13,11 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.ActivityBeautywriteBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
@@ -24,7 +29,7 @@ class BeautywriteActivity : AppCompatActivity() {
     private val TAG = BeautywriteActivity::class.java.simpleName
 
     private var isImageUpload = false
-
+    private var prouri : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -33,22 +38,13 @@ class BeautywriteActivity : AppCompatActivity() {
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
             val ukey = FBAuth.getUid()
-            //val eid = FBAuth.getDisplayName()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
-            Log.d(TAG,title)
-
-            //파이어 베이스 storge에 이미지를 저장
-            //게시글을 클릭했을떄, 게시글에 대한 정보 전달
-            //이미지 이름을 key값으로 저장
             val key = FBRef.beautyRef.push().key.toString()
-
-            //board
-            //  -key
-            //      -boardModel(title, content, uid, time)
-
+            val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -84,15 +80,12 @@ class BeautywriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.beautyRef
                             .child(key)
-                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key))
+                            .setValue(beautyModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
 
             }
-            /*FBRef.boardRef
-                .child(key)
-                .setValue(BoardModel(title,eid,ukey,dogname,breed,lostday,content,time))*/
             Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
@@ -108,42 +101,21 @@ class BeautywriteActivity : AppCompatActivity() {
 
 
 
-    private fun imageUpload(key : String){
-        // Get the data from an ImageView as bytes
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val mountainsRef = storageRef.child(key+".png")
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(UserModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
-        val imageView = binding.writeCamera
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-
-        var uploadTask = mountainsRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }
-
-        val urlTask = uploadTask.continueWithTask { task->
-            if (!task.isSuccessful){
-                task.exception?.let{
-                    throw it
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
                 }
-            }
-            mountainsRef.downloadUrl
-        }.addOnCompleteListener{ task->
-            if(task.isSuccessful){
-                val downloadUri = task.result
-
-
+            }   override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
+        FBRef.userRef.child(key).addValueEventListener(postListener)
     }
 
 

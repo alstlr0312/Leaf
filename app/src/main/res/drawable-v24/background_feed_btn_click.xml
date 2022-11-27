@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <stroke android:width = "5dp" android:color = "#D3D3D3"/>
-            <solid android:color="#D3D3D3" />
+            <stroke android:width = "5dp" android:color = "@color/main_color"/>
+            <solid android:color="@color/main_color" />
             <corners
                 android:bottomRightRadius="30dp"
                 android:bottomLeftRadius="30dp"

@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/my_rv_date"
-                    android:layout_width="77dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:text="9999/99/99"
                     android:textColor="#ABABAF"
@@ -87,12 +87,12 @@
 
                 <ImageView
                     android:id="@+id/my_rv_star_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/my_rv_star"
                     app:layout_constraintEnd_toStartOf="@+id/my_rv_star"
                     app:layout_constraintTop_toTopOf="@+id/my_rv_star"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
+                    app:srcCompat="@drawable/star" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

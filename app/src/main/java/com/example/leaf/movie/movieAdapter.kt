@@ -17,6 +17,9 @@ import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.UserModel
 import com.example.leaf.feed.FeedFragment
 import com.example.leaf.food.foodModel
+import com.example.leaf.house.houseAdapter
+import com.example.leaf.house.houseModel
+import com.example.leaf.house.housepostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,7 +32,6 @@ import kotlinx.coroutines.launch
 class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : RecyclerView.Adapter<movieAdapter.Viewholder>() {
     private val movieKeyList = arrayListOf<String>()
     private val movieDataList = arrayListOf<movieModel>()
-
     private val TAG = FeedFragment::class.java.simpleName
 
     lateinit var auth: FirebaseAuth
@@ -50,27 +52,30 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-
+        val proView = item.get(position).proUrl
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
+
             }
+            holder.apply {
+                Glide.with(context)
+                    .load(proView)
+                    .into(holder.profile)
 
-
+            }
         }
         holder.title.text=item.get(position).title
         Log.d("check33", item.get(position).title)
-        holder.writer.text=item.get(position).uid
+        holder.writer.text=item.get(position).uname
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star
-
         holder.itemView.setOnClickListener{
             onClick(context,position)
         }
-
 
         var query = FBRef.userRef.child(item.get(position).uid)
         query.addValueEventListener(object : ValueEventListener {
@@ -101,10 +106,12 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart_full)
                 Log.d("clickfav","click fav")
-                item.get(position).favoriteCount++
                 item.get(position).favorite.put(mydata.uid, true)
+                item.get(position).favoriteCount++
                 FBRef.movieRef.child(item.get(position).key).child("favorite")
                     .setValue( item.get(position).favorite)
+                FBRef.movieRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
                 FBRef.movieRef.child(item.get(position).key).child("favoriteCount")
                     .setValue(item.get(position).favoriteCount)
             }
@@ -160,11 +167,11 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         val star = itemView.findViewById<TextView>(R.id.star)
         var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
+        val profile = itemView.findViewById<ImageView>(R.id.imageView5)
     }
 
-
     fun onClick(context: Context, position: Int) {
-        val intent = Intent(context,moviepostActivity::class.java)
+        val intent = Intent(context, moviepostActivity::class.java)
         intent.putExtra("key",movieKeyList[position])
         context.startActivity(intent)
     }
@@ -189,6 +196,8 @@ class movieAdapter(val item : ArrayList<movieModel>, var mydata : UserModel) : R
         }
         FBRef.movieRef.addValueEventListener(postListener)
     }
-    
+
+
+
 }
 

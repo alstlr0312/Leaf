@@ -28,12 +28,12 @@ import kotlinx.coroutines.launch
 class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : RecyclerView.Adapter<houseAdapter.Viewholder>() {
     private val houseKeyList = arrayListOf<String>()
     private val houseDataList = arrayListOf<houseModel>()
-
     private val TAG = FeedFragment::class.java.simpleName
 
     lateinit var auth: FirebaseAuth
     lateinit var uid: String
     lateinit var followingsData : UserModel
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): houseAdapter.Viewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_list,parent,false)
@@ -48,32 +48,31 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         getData()
         val context = holder.itemView.context
         val imView = item.get(position).imUrl
-
-        CoroutineScope(Dispatchers.Main).launch {
-            holder.apply {
-                Glide.with(context)
-                    .load(imView)
-                    .into(holder.profile)
-            }
-        }
-
+        val proView = item.get(position).proUrl
         CoroutineScope(Dispatchers.Main).launch {
             holder.apply {
                 Glide.with(context)
                     .load(imView)
                     .into(holder.image)
+
+            }
+            holder.apply {
+                Glide.with(context)
+                    .load(proView)
+                    .into(holder.profile)
+
             }
         }
         holder.title.text=item.get(position).title
         Log.d("check33", item.get(position).title)
-        holder.writer.text=item.get(position).uid
+        holder.writer.text=item.get(position).uname
         holder.date.text=item.get(position).date
         holder.online.text=item.get(position).oneline
         holder.star.text=item.get(position).star
-
         holder.itemView.setOnClickListener{
             onClick(context,position)
         }
+
         var query = FBRef.userRef.child(item.get(position).uid)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -103,10 +102,12 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
             holder.favorite.setOnClickListener {
                 holder.favorite.setImageResource(R.drawable.heart_full)
                 Log.d("clickfav","click fav")
-                item.get(position).favoriteCount++
                 item.get(position).favorite.put(mydata.uid, true)
+                item.get(position).favoriteCount++
                 FBRef.houseRef.child(item.get(position).key).child("favorite")
                     .setValue( item.get(position).favorite)
+                FBRef.houseRef.child(item.get(position).key).child("favoriteCount")
+                    .setValue(item.get(position).favoriteCount)
                 FBRef.houseRef.child(item.get(position).key).child("favoriteCount")
                     .setValue(item.get(position).favoriteCount)
             }
@@ -160,14 +161,13 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         val image = itemView.findViewById<ImageView>(R.id.rv_photo)
         val online = itemView.findViewById<TextView>(R.id.rv_review)
         val star = itemView.findViewById<TextView>(R.id.star)
-        val favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
+        var favorite = itemView.findViewById<ImageView>(R.id.item_Heart)
         val follow_btn = itemView.findViewById<Button>(R.id.rv_follow)
-        val profile = itemView.findViewById<ImageView>(R.id.iv_profile)
+        val profile = itemView.findViewById<ImageView>(R.id.imageView5)
     }
 
-
     fun onClick(context: Context, position: Int) {
-        val intent = Intent(context,housepostActivity::class.java)
+        val intent = Intent(context, housepostActivity::class.java)
         intent.putExtra("key",houseKeyList[position])
         context.startActivity(intent)
     }
@@ -192,6 +192,7 @@ class houseAdapter(val item : ArrayList<houseModel>, var mydata : UserModel) : R
         }
         FBRef.houseRef.addValueEventListener(postListener)
     }
-    
+
+
 }
 

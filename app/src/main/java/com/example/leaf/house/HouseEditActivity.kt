@@ -1,6 +1,7 @@
 package com.example.leaf.house
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,9 +15,8 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.ActivityHouseEditBinding
-import com.example.leaf.databinding.ActivityMovieEditBinding
-import com.example.leaf.movie.movieModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -29,7 +29,7 @@ class HouseEditActivity : AppCompatActivity() {
     private lateinit var key: String
     private lateinit var binding: ActivityHouseEditBinding
     private var isImageUpload = false
-
+    private var prouri : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_house_edit)
@@ -39,13 +39,14 @@ class HouseEditActivity : AppCompatActivity() {
         getImageData(key)
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
+            val ukey = FBAuth.getUid()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.beautyratingBar.rating.toString()
             val key = FBRef.beautyRef.push().key.toString()
-            val uid = FBAuth.getUid()
+            val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
             if(isImageUpload) {
 
                 val storage = Firebase.storage
@@ -75,7 +76,7 @@ class HouseEditActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.houseRef
                             .child(key)
-                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key,uid))
+                            .setValue(houseModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
                     }
                 }
@@ -91,7 +92,22 @@ class HouseEditActivity : AppCompatActivity() {
             isImageUpload = true
         }
     }
+    private fun getpro(key: String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    val dataModel = dataSnapshot.getValue(UserModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
+                } catch (e: Exception) {
+                    Log.w(ContentValues.TAG, "삭제완료")
+                }
+            }   override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.userRef.child(key).addValueEventListener(postListener)
+    }
     private fun getBoardData(key: String){
 
         val postListener = object : ValueEventListener {

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.leaf.HomeFragment
 import com.example.leaf.R
+import com.example.leaf.Utils.FBAuth.auth
 import com.example.leaf.Utils.Search.SearchActivity
 import com.example.leaf.databinding.ActivityMyHomeBinding
 import com.example.leaf.feed.FeedFragment
@@ -33,8 +34,17 @@ class MyHomeActivity : AppCompatActivity() {
             }
             true
         }
+
         binding.mainGlass.setOnClickListener{
             val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.LogOutBtn.setOnClickListener {
+            val intent = Intent(this,LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            auth.signOut()
             startActivity(intent)
         }
     }

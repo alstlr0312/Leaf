@@ -36,7 +36,6 @@ class JoinActivity : AppCompatActivity() {
                 imageUri = result.data?.data //이미지 경로 원본
                 photo.setImageURI(imageUri) //이미지 뷰를 바꿈
                 Log.d("이미지", "성공")
-
             }
             else{
                 Log.d("이미지", "실패")
@@ -87,10 +86,9 @@ class JoinActivity : AppCompatActivity() {
                                                 .show()
                                         }
                                 }
-                            //
                             FBAuth.setDisplayName(nickname) // displayName의 값을 nickname으로 변경
                             Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, MyHomeActivity::class.java)
+                            val intent = Intent(this, LoginActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //회원가입하면 뒤에있는 엑티비티 없애기
                             startActivity(intent)

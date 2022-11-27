@@ -13,6 +13,7 @@ import com.example.leaf.R
 import com.example.leaf.Utils.FBAuth
 import com.example.leaf.Utils.FBRef
 import com.example.leaf.auth.MyHomeActivity
+import com.example.leaf.auth.UserModel
 import com.example.leaf.databinding.ActivityFoodwriteBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,9 +30,7 @@ class FoodwriteActivity : AppCompatActivity() {
     private val TAG = FoodwriteActivity::class.java.simpleName
 
     private var isImageUpload = false
-
     private var prouri : String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -39,15 +38,14 @@ class FoodwriteActivity : AppCompatActivity() {
 
         binding.pingping.setOnClickListener {
             val title = binding.writeTitle.text.toString()
-            val ukey = FBAuth.getDisplayName()
+            val ukey = FBAuth.getUid()
             val oneline = binding.writeContents.text.toString()
             val board = binding.writeEdit.text.toString()
             val time = FBAuth.getTime()
             val star = binding.foodratingBar.rating.toString()
-            Log.d(TAG,title)
-            val key = FBRef.beautyRef.push().key.toString()
-            val uid = FBAuth.getUid()
-
+            val key = FBRef.foodRef.push().key.toString()
+            val Uname = FBAuth.getDisplayName()
+            getpro(FBAuth.getUid())
 
             if(isImageUpload) {
 
@@ -84,13 +82,13 @@ class FoodwriteActivity : AppCompatActivity() {
                         val imuri = downloadUri.toString()
                         FBRef.foodRef
                             .child(key)
-                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,uid,prouri))
+                            .setValue(foodModel(title,ukey,oneline,board,time,imuri,star,key,Uname,prouri))
                         Log.d("check", downloadUri.toString())
-                        Log.w(ContentValues.TAG, "등록완료")
                     }
                 }
 
             }
+            Log.d("clickgdfsfsfd","click g")
             finish()
             val intent = Intent(this, MyHomeActivity::class.java)
             startActivity(intent)
@@ -107,21 +105,18 @@ class FoodwriteActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                   // val dataModel = dataSnapshot.getValue(ProfileModel::class.java)
-                   // prouri = dataModel?.imUrl.toString()
+                    val dataModel = dataSnapshot.getValue(UserModel::class.java)
+                    prouri = dataModel?.imUrl.toString()
 
                 } catch (e: Exception) {
                     Log.w(ContentValues.TAG, "삭제완료")
                 }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
+            }   override fun onCancelled(databaseError: DatabaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        FBRef.profileRef.child(key).addValueEventListener(postListener)
+        FBRef.userRef.child(key).addValueEventListener(postListener)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100){

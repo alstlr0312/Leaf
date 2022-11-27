@@ -1,6 +1,7 @@
 package com.example.leaf.beauty
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,7 @@ import java.lang.Exception
 class beautypostAtivity : AppCompatActivity() {
     private lateinit var binding : ActivityBeautypostAtivityBinding
     private lateinit var key: String
+    private lateinit var userid: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_beautypost_ativity)
@@ -39,6 +41,7 @@ class beautypostAtivity : AppCompatActivity() {
 
         getBoardData(key)
         getImageData(key)
+
     }
 
 
@@ -48,11 +51,11 @@ class beautypostAtivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle("게시글 수정/삭제")
         val alertDialog = mBuilder.show()
-        /* alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
-             val intent = Intent(this,BoardEditActivity::class.java)
+         alertDialog.findViewById<Button>(R.id.editbtn)?.setOnClickListener{
+             val intent = Intent(this,BeautyEditActivity::class.java)
              intent.putExtra("key",key)
              startActivity(intent)
-         }*/
+         }
         alertDialog.findViewById<Button>(R.id.deletebtn)?.setOnClickListener{
             FBRef.beautyRef.child(key).removeValue()
             finish()
@@ -60,7 +63,6 @@ class beautypostAtivity : AppCompatActivity() {
     }
 
     private fun getImageData(key: String) {
-        // Reference to an image file in Cloud Storage
         val storageReference = Firebase.storage.reference.child(key + ".png")
 
         // ImageView in your Activity
@@ -71,11 +73,14 @@ class beautypostAtivity : AppCompatActivity() {
                     Glide.with(this@beautypostAtivity)
                         .load(task.result)
                         .into(imageViewFromFB)
+
                 } else {
                 }
             }
         }
     }
+
+
 
     private fun getBoardData(key: String){
 
@@ -86,18 +91,22 @@ class beautypostAtivity : AppCompatActivity() {
                     val dataModel = dataSnapshot.getValue(beautyModel::class.java)
                     Log.d(ContentValues.TAG, dataSnapshot.toString())
                     binding.postTitle.text = dataModel?.title
-                    binding.postName.text = dataModel?.uid
+                    binding.postName.text = dataModel?.uname
                     binding.postDate.text = dataModel?.date
                     binding.starrate.text = dataModel?.star
                     binding.postText1.text = dataModel?.oneline
                     binding.postText.text = dataModel?.board
                     binding.starrate.text = dataModel?.star
                     binding.heartrate.text = dataModel?.favoriteCount.toString()
+
+                    val storageReference = Firebase.storage.reference.child("$dataModel?.ukey/imUrl")
+
                     if(dataModel?.favoriteCount!! > 0) {
                         binding.heart.setImageResource(R.drawable.heart_full)
                     }
                     val mykey = FBAuth.getUid()
                     val writerUid = dataModel?.uid
+                    userid = dataModel?.uid.toString()
                     if(mykey.equals(writerUid)){
                         binding.boardSettingIcon.isVisible = true
                     }else{
@@ -115,5 +124,7 @@ class beautypostAtivity : AppCompatActivity() {
         }
         FBRef.beautyRef.child(key).addValueEventListener(postListener)
     }
+
+
 
 }

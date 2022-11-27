@@ -94,15 +94,18 @@
             android:layout_width="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="60dp">
+
             <Button
-                android:text="리뷰 작성 완료"
                 android:id="@+id/pingping"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:background="@drawable/bottom_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:padding="7dp"
+                android:text="리뷰 작성 완료"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
