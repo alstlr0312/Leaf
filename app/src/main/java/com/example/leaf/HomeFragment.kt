@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
 
             }
         })
-        FBRef.userRef.child("$uid").addListenerForSingleValueEvent(object : ValueEventListener {
+        FBRef.userRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
             }

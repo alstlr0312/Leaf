@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.leaf.MainActivity
 import com.example.leaf.R
@@ -21,29 +22,33 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.util.jar.Manifest
 
 class JoinActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJoinBinding
     private lateinit var auth: FirebaseAuth
     private var imageUri : Uri? = null
+    private val getContent =
+
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if(result.resultCode == RESULT_OK) {
+                val photo = findViewById<ImageView>(R.id.profile_imageview)
+                imageUri = result.data?.data //이미지 경로 원본
+                photo.setImageURI(imageUri) //이미지 뷰를 바꿈
+                Log.d("이미지", "성공")
+
+            }
+            else{
+                Log.d("이미지", "실패")
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_join)
         //이미지 등록
-        val getContent =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if(result.resultCode == RESULT_OK) {
-                    val photo = findViewById<ImageView>(R.id.profile_imageview)
-                    imageUri = result.data?.data //이미지 경로 원본
-                    photo.setImageURI(imageUri) //이미지 뷰를 바꿈
-                    Log.d("이미지", "성공")
 
-                }
-                else{
-                    Log.d("이미지", "실패")
-                }
-            }
         var profileCheck = false
+
         binding.profileImageview.setOnClickListener{
             val intentImage = Intent(Intent.ACTION_PICK)
             intentImage.type = MediaStore.Images.Media.CONTENT_TYPE
@@ -91,7 +96,9 @@ class JoinActivity : AppCompatActivity() {
                             startActivity(intent)
 
                         } else {
-                            Toast.makeText(this, "no", Toast.LENGTH_SHORT).show()
+                            if(!profileCheck) {
+                                Toast.makeText(this, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
 
